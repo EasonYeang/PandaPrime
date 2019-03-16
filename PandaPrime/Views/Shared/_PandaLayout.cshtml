@@ -1,0 +1,109 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Panda Project</title>
+    @*<link href="~/plugins/iview/dist/styles/iview.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">*@
+    @RenderSection("Styles")
+    @RenderSection("Scripts")
+    <style scoped>
+        .layout {
+            border: 1px solid #d7dde4;
+            background: #f5f7f9;
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .layout-logo {
+            width: 100px;
+            height: 30px;
+            background: #5b6270;
+            border-radius: 3px;
+            float: left;
+            position: relative;
+            top: 15px;
+            left: 20px;
+        }
+
+        .layout-nav {
+            width: 420px;
+            margin: 0 auto;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    @Html.AntiForgeryToken()
+    <div id="app">
+        <template>
+            <div class="layout">
+                <Layout>
+                    <Header>
+                        <i-menu mode="horizontal" theme="dark" @@on-select="selectMenu" :active-name="activeTop" ref="activeTop">
+                            <div class="layout-logo"></div>
+                            <div class="layout-nav">
+                                <menu-item v-if="item.Level==0" v-for="item in permissons" :name="item.SerialNumber">
+                                    <Icon :type="item.Icon"></Icon>
+                                    {{item.Name}}
+                                </menu-item>
+                                <!--退出登录-->
+                                <Submenu name="4">
+                                    <template slot="title">
+                                        admin
+                                    </template>
+                                    <Menu-Item name="logOut">
+                                        退出登录
+                                    </Menu-Item>
+                                </Submenu>
+                            </div>
+                        </i-menu>
+                    </Header>
+                    <Layout>
+                        <Sider :style="{background: '#fff'}">
+                            <i-menu theme="dark" width="auto" @@on-select="selectSideMenu" :active-name="activeSide" ref="activeSide" :open-names="openNames">
+                                <menu-item v-if="item.Child==null" v-for="item in sidePermissions" :name="item.SerialNumber">
+                                    <Icon :type="item.Icon"></Icon>
+                                    {{item.Name}}
+                                </menu-item>
+                                <Submenu v-if="item.Child!=null" v-for="item in sidePermissions" :name="item.SerialNumber">
+                                    <template slot="title">
+                                        <Icon :type="item.Icon"></Icon>
+
+                                        <span>{{item.Name}}</span>
+                                    </template>
+                                    <menu-item v-if="two.Child==null" v-for="two in item.Child" :name="two.SerialNumber">{{two.Name}}</menu-item>
+                                    <Submenu v-if="two.Child!=null" v-for="two in item.Child" :name="two.SerialNumber">
+                                        <template slot="title">
+                                            {{two.Name}}
+                                        </template>
+                                        <Menu-Item v-if="two.Child!=null" v-for="three in two.Child" :name="three.SerialNumber">{{three.Name}}</Menu-Item>
+                                    </Submenu>
+                                </Submenu>
+
+                            </i-menu>
+                        </Sider>
+                        <Layout :style="{padding: '0 24px 24px'}">
+                            @*<Breadcrumb :style="{margin: '6px 0'}">
+                                    <Breadcrumb-Item>Home</Breadcrumb-Item>
+                                    <Breadcrumb-Item>Components</Breadcrumb-Item>
+                                    <Breadcrumb-Item>Layout</Breadcrumb-Item>
+                                </Breadcrumb>*@
+                            <Breadcrumb :style="{margin: '6px 0'}">
+                                <Breadcrumb-Item v-for="item in breadcrumb">{{item}}</Breadcrumb-Item>
+                            </Breadcrumb>
+                            <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
+                                @RenderBody()
+                            </Content>
+                        </Layout>
+                    </Layout>
+                </Layout>
+            </div>
+        </template>
+    </div>
+</body>
+</html>

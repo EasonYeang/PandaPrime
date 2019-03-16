@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "目录管理";
+    Layout = "~/Views/Shared/_PandaLayout.cshtml";
+}
+@section Styles{
+    <link href="~/plugins/iview/dist/styles/iview.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+}
+
+@section Scripts{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/plugins/vue/vue.js"></script>
+    <script src="~/plugins/iview/dist/iview.min.js"></script>
+    <script src="~/plugins/iview/dist/locale/zh-CN.js"></script>
+    <script src="~/PrimeJS/PublicJs.js"></script>
+    <script src="~/PrimeJS/PermissionManage.js"></script>
+}
+<template>
+    <row>
+        <i-col>
+            <template>
+                <i-Form ref="formInline" :model="formInline" inline>
+                    <Form-Item prop="user" label="目录名称" label-position="right" :label-width="100">
+                        <i-Input type="text" v-model="formInline.user" placeholder="Username">
+                            <Icon type="ios-person-outline" slot="prepend"></Icon>
+                        </i-Input>
+                    </Form-Item>
+                    <Form-Item prop="password" label="目录编号" label-position="right" :label-width="100">
+                        <i-Input type="text" v-model="formInline.password" placeholder="Password">
+                            <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                        </i-Input>
+                    </Form-Item>
+                    <Form-Item>
+                        <i-Button type="primary" icon="ios-search" size="small" @@click="handleSubmit('formInline')">搜索</i-Button>
+                    </Form-Item>
+                </i-Form>
+            </template>
+        </i-col>
+    </row>
+    <row style="margin-bottom:5px;">
+        <i-col span="8">
+            <template>
+                <i-Button size="small" icon="ios-add" type="primary">添加目录</i-Button>
+            </template>
+        </i-col>
+        <i-col span="2" offset="14">
+            <row type="flex" justify="end">
+                <template>
+                    <Button-Group size="small">
+                        <i-Button>
+                            <Icon type="md-refresh"></Icon>
+
+                        </i-Button>
+                        <i-Button>
+                            <Icon type="md-download"></Icon>
+
+                        </i-Button>
+                    </Button-Group>
+                </template>
+            </row>
+
+        </i-col>
+    </row>
+    <row>
+        <i-col span="24">
+            <template>
+                <i-Table :columns="columns1" :data="data1"></i-Table>
+            </template>
+        </i-col>
+    </row>
+    <row style="margin-top:5px;">
+        <i-col span="16">
+            <row>
+                <template>
+                    <Page :total="40" size="small" show-elevator show-sizer show-total />
+                </template>
+            </row>
+        </i-col>
+    </row>
+</template>
+
