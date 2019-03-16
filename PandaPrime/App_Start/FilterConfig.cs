@@ -9,7 +9,7 @@ namespace PandaPrime
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            filters.Add(new IsAuthorizeAttribute());
+            //filters.Add(new IsAuthorizeAttribute());
         }
     }
 }

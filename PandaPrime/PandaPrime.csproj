@@ -163,6 +163,7 @@
     <Compile Include="AM\Configuration.cs" />
     <Compile Include="AM\PAccountProfile.cs" />
     <Compile Include="AM\PPermissionProfile.cs" />
+    <Compile Include="AM\PPermissionProfile2.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

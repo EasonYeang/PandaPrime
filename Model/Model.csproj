@@ -41,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PAccountVm.cs" />
+    <Compile Include="PPermissionDto.cs" />
     <Compile Include="PPermissionVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableColumn.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

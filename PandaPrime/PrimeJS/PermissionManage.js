@@ -9,46 +9,10 @@
             sidePermissions: [],
             breadcrumb: []
             //-------------------------
-            , columns1: [
-                {
-                    title: 'Name',
-                    key: 'name'
-                },
-                {
-                    title: 'Age',
-                    key: 'age'
-                },
-                {
-                    title: 'Address',
-                    key: 'address'
-                }
-            ],
-            data1: [
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park',
-                    date: '2016-10-03'
-                },
-                {
-                    name: 'Jim Green',
-                    age: 24,
-                    address: 'London No. 1 Lake Park',
-                    date: '2016-10-01'
-                },
-                {
-                    name: 'Joe Black',
-                    age: 30,
-                    address: 'Sydney No. 1 Lake Park',
-                    date: '2016-10-02'
-                },
-                {
-                    name: 'Jon Snow',
-                    age: 26,
-                    address: 'Ottawa No. 2 Lake Park',
-                    date: '2016-10-04'
-                }
-            ],
+            , cols: [],
+            tableData: [],
+            total: 0,
+            loading: true,
             formInline: {
                 user: '',
                 password: ''
@@ -166,6 +130,26 @@
                         this.$Message.error('Fail!');
                     }
                 })
+            },
+            handleRefresh: function () {
+                this.getTableData();
+            },
+            getTableData: function () {
+                var $this = this;
+                $this.loading = true;
+                $.$Post({
+                    url: '/PermissionManage/GetTableData',
+                    success: function (result) {
+                        if (result != null) {
+                            $this.cols = result.cols;
+                            $this.tableData = result.tableData;
+                            $this.total = result.total;
+                        }
+                    },
+                    always: function () {
+                        $this.loading = false;
+                    }
+                });
             }
         },
         watch: {
@@ -185,6 +169,7 @@
             this.getTopPermissions();
             this.SetMenuDefault();
             this.getPermissionNav();
+            this.getTableData();
         }
     })
 });

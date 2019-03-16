@@ -48,7 +48,7 @@
             <row type="flex" justify="end">
                 <template>
                     <Button-Group size="small">
-                        <i-Button>
+                        <i-Button @@click="handleRefresh">
                             <Icon type="md-refresh"></Icon>
 
                         </i-Button>
@@ -65,7 +65,7 @@
     <row>
         <i-col span="24">
             <template>
-                <i-Table :columns="columns1" :data="data1"></i-Table>
+                <i-Table border :loading="loading" :columns="cols" :data="tableData"></i-Table>
             </template>
         </i-col>
     </row>
@@ -73,7 +73,7 @@
         <i-col span="16">
             <row>
                 <template>
-                    <Page :total="40" size="small" show-elevator show-sizer show-total />
+                    <Page :total="total" size="small" show-elevator show-sizer show-total />
                 </template>
             </row>
         </i-col>
