@@ -13,5 +13,7 @@ namespace Model
         public int? PSN { get; set; }
         public int? Lv { get; set; }
         public string Path { get; set; }
+        public string Icon { get; set; }
+        public int? Order { get; set; }
     }
 }

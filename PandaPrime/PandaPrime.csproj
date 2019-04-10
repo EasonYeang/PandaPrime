@@ -180,6 +180,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BaseInfo\Universe\file.html" />
+    <Content Include="BaseInfo\Universe\PermissionManage.html" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\Autofac.dll" />

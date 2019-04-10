@@ -17,7 +17,7 @@
                 XHR.setRequestHeader("Token", (localStorage.getItem("Token") || ""));
             },
             //contentType: lists.contentType,
-            data: AddAntiForgeryToken(lists.data),
+            data: lists.data,
             async: lists.async,
             cache: lists.cache,
             success: function (data) {

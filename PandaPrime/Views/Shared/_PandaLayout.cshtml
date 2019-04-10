@@ -19,6 +19,14 @@
             overflow: hidden;
         }
 
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
         .layout-logo {
             width: 100px;
             height: 30px;
@@ -64,7 +72,7 @@
                         </i-menu>
                     </Header>
                     <Layout>
-                        <Sider :style="{background: '#fff'}">
+                        <Sider :style="{background: '#515a6e'}">
                             <i-menu theme="dark" width="auto" @@on-select="selectSideMenu" :active-name="activeSide" ref="activeSide" :open-names="openNames">
                                 <menu-item v-if="item.Child==null" v-for="item in sidePermissions" :name="item.SerialNumber">
                                     <Icon :type="item.Icon"></Icon>
@@ -88,16 +96,12 @@
                             </i-menu>
                         </Sider>
                         <Layout :style="{padding: '0 24px 24px'}">
-                            @*<Breadcrumb :style="{margin: '6px 0'}">
-                                    <Breadcrumb-Item>Home</Breadcrumb-Item>
-                                    <Breadcrumb-Item>Components</Breadcrumb-Item>
-                                    <Breadcrumb-Item>Layout</Breadcrumb-Item>
-                                </Breadcrumb>*@
                             <Breadcrumb :style="{margin: '6px 0'}">
                                 <Breadcrumb-Item v-for="item in breadcrumb">{{item}}</Breadcrumb-Item>
                             </Breadcrumb>
-                            <Content :style="{padding: '24px',minHeight: '500px', background: '#fff'}">
-                                @RenderBody()
+                            <Content :style="{background: '#fff'}">
+                                @*@RenderBody()*@
+                                <iframe id="iframe_content" frameborder="0" src="~/BaseInfo/Universe/file.html" width="100%" height="100%"></iframe>
                             </Content>
                         </Layout>
                     </Layout>
@@ -107,3 +111,25 @@
     </div>
 </body>
 </html>
+<script>
+    $(function () {
+
+    });
+    window.onload = function () {
+        var Width = document.documentElement.clientWidth;
+        //   $("#external-frame").width(Width - 240);
+        setIframeHeight(document.getElementById('iframe_content'));
+    };
+    function setIframeHeight(iframe) {
+        if (iframe) {
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                var Height = document.documentElement.clientHeight;
+                iframe.height = Height - 114;
+            }
+        }
+    };
+    window.onresize = function () {
+        setIframeHeight(document.getElementById('iframe_content'));
+    }
+</script>

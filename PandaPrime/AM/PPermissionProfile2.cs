@@ -18,6 +18,8 @@ namespace PandaPrime.AM
                 .ForMember(dest => dest.PSN, opt => opt.MapFrom(src => src.ParentSN))
                 .ForMember(dest => dest.Lv, opt => opt.MapFrom(src => src.Level))
                 .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.FilePath))
+                .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => src.Icon))
+                .ForMember(dest => dest.Order, opt => opt.MapFrom(src => src.Order))
                 .ReverseMap();
         }
     }

@@ -16,7 +16,23 @@
             formInline: {
                 user: '',
                 password: ''
-            }
+            },
+            formModal: false,
+            formValidate: {
+                Title: '',
+                Path: '',
+                Icon: '',
+                order: ''
+            },
+            ruleValidate: {
+                Title: [{
+                    required: true, message: '目录名称不能为空', trigger: 'blur'
+                }],
+                Path: [{
+                    required: true, message: '目录路径不能为空', trigger: 'blur'
+                }]
+            },
+            pplist: []
         },
         methods: {
             selectMenu: function (name) {
@@ -44,23 +60,6 @@
                     }
                 });
             },
-            getTopPermissions: function () {
-                var $this = this;
-                $.$Post({
-                    url: '/DefaultPage/GetTopPermissions',
-                    success: function (result) {
-                        if (result != null && result.length > 0) {
-                            $this.activeTop = result[0].SerialNumber;
-                        }
-                        $this.permissons = result;
-                        $this.$nextTick(() => {
-                            $this.$refs.activeTop.updateOpened();
-                            $this.$refs.activeTop.updateActiveName();
-
-                        });
-                    }
-                });
-            },
             getSidePermissions: function (serialNumber) {
                 var $this = this;
                 $.$Post({
@@ -85,41 +84,6 @@
             },
             collapsedSider: function () {
                 this.$refs.side1.toggleCollapse();
-            },
-            SetMenuDefault: function () {
-                var openNames = getQueryString("openNames");
-                var activeSide = getQueryString("activeSide");
-                var nav = getQueryString("nav");
-                this.activeSide = parseInt(activeSide) || 0;
-                if (openNames != null) {
-                    if (openNames.indexOf(',') != -1) {
-                        var arr = [];
-                        var s = openNames.split(',');
-                        $.each(s, function (index, value) {
-                            arr.push(parseInt(value));
-                        });
-                        this.openNames = arr;
-                    }
-                }
-                this.$nextTick(() => {
-                    this.$refs.activeSide.updateOpened();
-                    this.$refs.activeSide.updateActiveName();
-
-                });
-
-
-            },
-            getPermissionNav: function () {
-                var $this = this;
-                $.$Post({
-                    url: '/DefaultPage/GetPermissionNav',
-                    data: { openNames: getQueryString("openNames"), aS: getQueryString("activeSide") },
-                    success: function (result) {
-                        if (result.length > 0) {
-                            $this.breadcrumb = result;
-                        }
-                    }
-                });
             }
             //-------------------------
             , handleSubmit(name) {
@@ -150,6 +114,21 @@
                         $this.loading = false;
                     }
                 });
+            },
+            showForm: function () {
+                this.formModal = true;
+            },
+            asyncOK: function () {
+                //setTimeout(() => {
+                //    this.formModal = false;
+                //}, 2000);
+                this.$refs['formValidate'].validate((valid) => {
+                    if (valid) {
+                        this.$Message.success('Success!');
+                    } else {
+                        this.$Message.error('Fail!');
+                    }
+                })
             }
         },
         watch: {
@@ -166,9 +145,6 @@
             }
         },
         mounted: function () {
-            this.getTopPermissions();
-            this.SetMenuDefault();
-            this.getPermissionNav();
             this.getTableData();
         }
     })

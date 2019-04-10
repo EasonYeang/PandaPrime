@@ -21,11 +21,10 @@ namespace PandaPrime.Controllers
         // GET: PermissionManage
         public ActionResult Index()
         {
-            return View();
+            return null;
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public JsonResult GetTableData()
         {
             List<PPermission> result = _ppermissionService.GetList(r => !r.IsDelete.Value && r.Level > 0);

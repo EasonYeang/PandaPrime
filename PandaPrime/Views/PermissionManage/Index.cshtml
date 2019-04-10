@@ -41,7 +41,7 @@
     <row style="margin-bottom:5px;">
         <i-col span="8">
             <template>
-                <i-Button size="small" icon="ios-add" type="primary">添加目录</i-Button>
+                <i-Button size="small" icon="ios-add" @@click="showForm()" type="primary">添加目录</i-Button>
             </template>
         </i-col>
         <i-col span="2" offset="14">
@@ -78,5 +78,33 @@
             </row>
         </i-col>
     </row>
+</template>
+<template>
+    <Modal v-model="formModal"
+           title="目录信息"
+           :loading="true"
+           @@on-ok="asyncOK">
+        <template>
+            <i-Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+                <Form-Item label="目录名称：" prop="Title">
+                    <i-Input type="text" v-model="formValidate.Title" placeholder="请输入目录名称"></i-Input>
+                </Form-Item>
+                <form-item label="父目录：" prop="PSN">
+                    <i-select v-model="formValidate.PSN" style="width:200px">
+                        <i-option v-for="item in pplist" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+                    </i-select>
+                </form-item>
+                <form-item label="目录路径：" prop="Path">
+                    <i-input type="text" v-model="formValidate.Path" placeholder="请输入目录路径"></i-input>
+                </form-item>
+                <form-item label="图标：" prop="Icon">
+                    <i-input type="text" v-model="formValidate.Icon" placeholder="请输入图标代码"></i-input>
+                </form-item>
+                <form-item label="目录排序：" prop="Order">
+                    <i-input type="text" v-model="formValidate.Order" placeholder="请输入目录序号"></i-input>
+                </form-item>
+            </i-Form>
+        </template>
+    </Modal>
 </template>
 

@@ -31,7 +31,7 @@
                     url: '/DefaultPage/SelectSideMenu',
                     data: { sn: sn },
                     success: function (result) {
-                        window.location = result;
+                        $('#iframe_content').attr('src', result);
                     }
                 });
             },

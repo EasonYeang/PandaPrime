@@ -31,7 +31,6 @@ namespace PandaPrime.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public JsonResult LogOut()
         {
             Session.Clear();
@@ -45,7 +44,6 @@ namespace PandaPrime.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public JsonResult GetTopPermissions()
         {
             List<PPermission> all = _ppermissionService.GetAll();
@@ -132,7 +130,6 @@ namespace PandaPrime.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public JsonResult GetSidePermissions(int sn)
         {
             List<PPermissionVm> list = new List<PPermissionVm>();
@@ -163,7 +160,6 @@ namespace PandaPrime.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public JsonResult SelectSideMenu(int sn)
         {
             List<PPermission> allPermissions = _ppermissionService.GetAll();
@@ -194,7 +190,6 @@ namespace PandaPrime.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public JsonResult GetPermissionNav(string openNames, int aS)
         {
             string[] arr = openNames.Split(',');
