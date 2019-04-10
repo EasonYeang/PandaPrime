@@ -40,7 +40,6 @@ namespace PandaPrime.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [AllowAnonymous]
         public ActionResult Login(PAccountVm vm)
         {

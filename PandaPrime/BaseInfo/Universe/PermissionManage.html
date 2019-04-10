@@ -5,18 +5,21 @@
     <title>目录管理</title>
     <link href="../../plugins/iview/dist/styles/iview.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link href="../../assets/main.css" rel="stylesheet" />
+    <link href="../../plugins/elementUI/index.css" rel="stylesheet" />
 
     <script src="../../Scripts/jquery-1.10.2.min.js"></script>
     <script src="../../plugins/vue/vue.js"></script>
     <script src="../../plugins/iview/dist/iview.min.js"></script>
     <script src="../../plugins/iview/dist/locale/zh-CN.js"></script>
+    <script src="../../plugins/elementUI/index.js"></script>
     <script src="../../PrimeJS/PublicJs.js"></script>
     <script src="../../PrimeJS/PermissionManage.js"></script>
 </head>
 <body>
-    <div id="app" style="padding:15px;">
+    <div id="app">
         <template>
-            <row>
+            <!--<row>
                 <i-col>
                     <template>
                         <i-Form ref="formInline" :model="formInline" inline>
@@ -34,11 +37,12 @@
                         </i-Form>
                     </template>
                 </i-col>
-            </row>
+            </row>-->
             <row style="margin-bottom:5px;">
                 <i-col span="8">
                     <template>
                         <i-Button size="small" icon="ios-add" @click="showForm()" type="primary">添加目录</i-Button>
+                        <i-Button size="small" icon="ios-trash" v-if="seen" type="error">批量删除</i-Button>
                     </template>
                 </i-col>
                 <i-col span="2" offset="14">
@@ -62,11 +66,33 @@
             <row>
                 <i-col span="24">
                     <template>
-                        <i-Table border :loading="loading" :columns="cols" :data="tableData"></i-Table>
+                        <template>
+                            <el-table :data="tableData" stripe border style="width: 100%" size="small" @select-all="onSelectAll" @select="onSelect">
+                                <el-table-column type="selection"
+                                                 width="55">
+                                </el-table-column>
+                                <el-table-column prop="Number"
+                                                 label="目录编号"
+                                                 width="80">
+                                </el-table-column>
+                                <el-table-column prop="Title"
+                                                 label="目录名称">
+                                </el-table-column>
+                                <el-table-column prop="Path"
+                                                 label="路径">
+                                </el-table-column>
+                                <el-table-column label="操作" width="120" align="center">
+                                    <template slot-scope="scope">
+                                        <i-button type="primary" shape="circle" icon="ios-create" size="small"></i-button>
+                                        <i-button type="error" shape="circle" icon="ios-trash" size="small" @click="handleDelete(scope.$index, scope.row)"></i-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </template>
                     </template>
                 </i-col>
             </row>
-            <row style="margin-top:5px;">
+            <!--<row style="margin-top:5px;">
                 <i-col span="16">
                     <row>
                         <template>
@@ -74,7 +100,7 @@
                         </template>
                     </row>
                 </i-col>
-            </row>           
+            </row>-->
         </template>
         <template>
             <Modal v-model="formModal"
@@ -82,6 +108,7 @@
                    :loading="true"
                    :fullscreen="false"
                    :transfer="true"
+                   :mask-closable="false"
                    @on-ok="asyncOK">
                 <template>
                     <i-Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">

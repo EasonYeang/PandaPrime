@@ -8,6 +8,7 @@ namespace Model
 {
     public class PPermissionDto
     {
+        public int ID { get; set; }
         public string Title { get; set; }
         public int Number { get; set; }
         public int? PSN { get; set; }

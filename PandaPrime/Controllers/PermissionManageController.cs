@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Utility;
 
 namespace PandaPrime.Controllers
 {
@@ -29,14 +30,25 @@ namespace PandaPrime.Controllers
         {
             List<PPermission> result = _ppermissionService.GetList(r => !r.IsDelete.Value && r.Level > 0);
             List<PPermissionDto> resultDto = Mapper.Map<List<PPermission>, List<PPermissionDto>>(result);
-            List<TableColumn> tc = new List<TableColumn>() {
-                new TableColumn{ type="selection",width=60,align="center" },
-                new TableColumn{ title="目录名称",key="Title" },
-                new TableColumn{ title="路径",key="Path" }
-            };
 
-            var json = new { cols = tc, tableData = resultDto, total = resultDto.Count };
-            return Json(json);
+            return Json(resultDto);
+        }
+
+        [HttpPost]
+        public JsonResult OnDelete(int id)
+        {
+            int flag = 0;
+            string msg = "删除失败！";
+            PPermission permission = _ppermissionService.GetSingleById(id);
+            permission.IsDelete = true;
+            _ppermissionService.AddOrUpdate(permission);
+            int r = _ppermissionService.SaveChanges();
+            if (r > 0)
+            {
+                flag = 1;
+                msg = "删除成功！";
+            }
+            return Json(Tools.Alert(flag, msg));
         }
     }
 }

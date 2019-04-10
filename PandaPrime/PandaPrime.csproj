@@ -180,8 +180,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BaseInfo\Universe\file.html" />
+    <Content Include="assets\main.css" />
+    <Content Include="BaseInfo\Universe\console.html" />
     <Content Include="BaseInfo\Universe\PermissionManage.html" />
+    <Content Include="BaseInfo\Universe\welcome.html" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\Autofac.dll" />
@@ -334,6 +336,8 @@
     <Content Include="plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.min.css" />
     <Content Include="plugins\bootstrap\bootstrap.min.css" />
     <Content Include="plugins\bootstrap\bootstrap.min.js" />
+    <Content Include="plugins\elementUI\index.css" />
+    <Content Include="plugins\elementUI\index.js" />
     <Content Include="plugins\font-awesome\font-awesome.min.css" />
     <Content Include="plugins\fonts\fontawesome-webfont.svg" />
     <Content Include="plugins\fonts\glyphicons-halflings-regular.svg" />
@@ -578,6 +582,8 @@
     <Content Include="plugins\iview\dist\locale\zh-TW.js.map" />
     <Content Include="plugins\iview\dist\styles\fonts\ionicons.ttf" />
     <Content Include="plugins\iview\dist\styles\fonts\ionicons.woff" />
+    <Content Include="plugins\elementUI\fonts\element-icons.ttf" />
+    <Content Include="plugins\elementUI\fonts\element-icons.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

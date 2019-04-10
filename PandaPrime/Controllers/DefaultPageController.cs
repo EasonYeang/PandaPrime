@@ -144,7 +144,7 @@ namespace PandaPrime.Controllers
         /// <returns></returns>
         private List<PPermissionVm> WhileCalcute(int sn)
         {
-            List<PPermission> pl = _ppermissionService.GetListOrder(r => r.ParentSN == sn, r => r.Order);
+            List<PPermission> pl = _ppermissionService.GetListOrder(r => r.ParentSN == sn && r.IsDelete == false, r => r.Order);
             List<PPermissionVm> plVm = Mapper.Map<List<PPermission>, List<PPermissionVm>>(pl);
             foreach (PPermissionVm vm in plVm)
             {
