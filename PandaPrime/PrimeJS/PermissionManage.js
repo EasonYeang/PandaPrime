@@ -3,24 +3,25 @@
         el: '#app',
         data: {
             tableData: [],
-            pplist: [],
+            parentPermissionList: [],
             formModal: false,
             formValidate: {
                 Title: '',
                 PSN: '',
                 Path: '',
                 Icon: '',
-                Order: ''
+                Order: '',
+                Lv: 0
             },
             ruleValidate: {
                 Title: [
                     { required: true, message: '目录名称不能为空', trigger: 'blur' }
                 ],
-                Path: [
-                    { required: true, message: '目录路径不能为空', trigger: 'blur' }
+                PSN: [
+                    { required: true, message: '父目录不能为空', trigger: 'blur' }
                 ],
             },
-            seen: false
+            seen: false,
         },
         methods: {
             getTableData: function () {
@@ -69,9 +70,23 @@
             asyncOK: function () {
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
-                        this.$Message.success('Success!');
-                    } else {
-                        this.$Message.error('Fail!');
+                        var $this = this;
+                        $.$Post({
+                            url: '/PermissionManage/AddOrUpdate',
+                            data: { pm: $this.formValidate, id: 0 },
+                            success: function (result) {
+                                if (result != null) {
+                                    var flag = result.Flag;
+                                    var msg = result.Message;
+                                    if (flag === 1) {
+                                        $this.$Message.success(msg);
+                                        $this.formModal = false;
+                                    } else {
+                                        $this.$Message.error(msg);
+                                    }
+                                }
+                            }
+                        });
                     }
                 })
             },
@@ -88,10 +103,24 @@
                 } else {
                     this.seen = false;
                 }
+            },
+            getParentPermissionList() {
+                //父级目录下拉列表
+                var $this = this;
+                $.$Post({
+                    url: '/PermissionManage/GetParentPermissionList',
+                    data: { parentLevel: $this.parentLevel },
+                    success: function (result) {
+                        if (result != null && result.length > 0) {
+                            $this.parentPermissionList = result;
+                        }
+                    }
+                });
             }
         },
         mounted: function () {
             this.getTableData();
+            this.getParentPermissionList();
         }
     });
 });

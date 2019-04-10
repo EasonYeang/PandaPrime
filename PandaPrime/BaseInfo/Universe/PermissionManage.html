@@ -80,6 +80,15 @@
                                 </el-table-column>
                                 <el-table-column prop="Path"
                                                  label="路径">
+                                    <template slot-scope="scope">
+                                        <div v-if="scope.row.Path == null||scope.row.Path.length == 0">
+                                            <i-button type="text">查看下级目录</i-button>
+                                        </div>
+                                        <div v-else>
+                                            <p>{{scope.row.Path}}</p>
+                                        </div>
+                                    </template>
+
                                 </el-table-column>
                                 <el-table-column label="操作" width="120" align="center">
                                     <template slot-scope="scope">
@@ -117,7 +126,7 @@
                         </Form-Item>
                         <form-item label="父目录：" prop="PSN">
                             <i-select v-model="formValidate.PSN" style="width:200px">
-                                <i-option v-for="item in pplist" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+                                <i-option v-for="item in parentPermissionList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
                             </i-select>
                         </form-item>
                         <form-item label="目录路径：" prop="Path">
