@@ -513,7 +513,11 @@
     <Content Include="plugins\timepicker\bootstrap-timepicker.js" />
     <Content Include="plugins\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="plugins\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="plugins\vue\axios.min.js" />
+    <Content Include="plugins\vue\browser.min.js" />
+    <Content Include="plugins\vue\polyfill.min.js" />
     <Content Include="plugins\vue\vue.js" />
+    <Content Include="PrimeJS\console.js" />
     <Content Include="PrimeJS\DefaultPage.js" />
     <Content Include="PrimeJS\Login.js" />
     <Content Include="PrimeJS\PermissionManage.js" />

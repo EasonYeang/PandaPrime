@@ -52,7 +52,7 @@
             <div class="layout">
                 <Layout>
                     <Header>
-                        <i-menu mode="horizontal" theme="dark" @@on-select="selectMenu" :active-name="activeTop" ref="activeTop">
+                        <i-menu mode="horizontal" theme="light" @@on-select="selectMenu" :active-name="activeTop" ref="activeTop">
                             <div class="layout-logo"></div>
                             <div class="layout-nav">
                                 <menu-item v-if="item.Level==0" v-for="item in permissons" :name="item.SerialNumber">
@@ -73,7 +73,7 @@
                     </Header>
                     <Layout>
                         <Sider :style="{background: '#515a6e'}">
-                            <i-menu theme="dark" width="auto" @@on-select="selectSideMenu" :active-name="activeSide" ref="activeSide" :open-names="openNames">
+                            <i-menu theme="light" width="auto" @@on-select="selectSideMenu" :active-name="activeSide" ref="activeSide" :open-names="openNames">
                                 <menu-item v-if="item.Child==null" v-for="item in sidePermissions" :name="item.SerialNumber">
                                     <Icon :type="item.Icon"></Icon>
                                     {{item.Name}}
