@@ -37,7 +37,7 @@
         }
     </style>
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" onkeydown="keyDown();">
     <div>
         @Html.AntiForgeryToken();
     </div>
@@ -91,6 +91,13 @@
                 increaseArea: '20%' /* optional */
             });
         });
+
+        function keyDown() {
+            if (event.keyCode == 13) {
+                $('#signIn').focus();
+                $('#signIn').click();
+            }
+        }
     </script>
 </body>
 </html>
