@@ -519,6 +519,7 @@
     <Content Include="plugins\vue\vue.js" />
     <Content Include="PrimeJS\console.js" />
     <Content Include="PrimeJS\DefaultPage.js" />
+    <Content Include="PrimeJS\extend.js" />
     <Content Include="PrimeJS\Login.js" />
     <Content Include="PrimeJS\PermissionManage.js" />
     <Content Include="PrimeJS\PublicJs.js" />
