@@ -88,6 +88,7 @@ namespace PandaPrime.Controllers
                         IsDelete=false,
                         SerialNumber=4,
                         ParentSN=3,
+                        FilePath="../../BaseInfo/Universe/PermissionManage.html",
                         AddTime=DateTime.Now.Date
                     },
                     new PPermission{
