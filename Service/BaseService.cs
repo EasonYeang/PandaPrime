@@ -143,5 +143,29 @@ namespace Service
         {
             return _baseRepository.FirstOrDefault(predicate);
         }
+
+        /// <summary>
+        /// 根据条件查询实体集合并排序（分页）
+        /// </summary>
+        /// <typeparam name="Tkey"> 由 orderWhere 表示的函数返回的键类型</typeparam>
+        /// <param name="where">查询条件</param>
+        /// <param name="orderBy">用于从元素中提取键的函数</param>
+        /// <returns></returns>
+        public List<TEntity> GetListPagedOrder<Tkey>(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, Tkey>> orderBy, out int totalCount)
+        {
+            return _baseRepository.GetListPagedOrder<Tkey>(pageIndex, pageSize, where, orderBy, out totalCount);
+        }
+
+        /// <summary>
+        /// 根据条件查询实体集合并排序（分页）
+        /// </summary>
+        /// <typeparam name="Tkey"> 由 orderWhere 表示的函数返回的键类型</typeparam>
+        /// <param name="where">查询条件</param>
+        /// <param name="orderBy">用于从元素中提取键的函数</param>
+        /// <returns></returns>
+        public List<TEntity> GetListPagedOrderDec<Tkey>(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, Tkey>> orderBy, out int totalCount)
+        {
+            return _baseRepository.GetListPagedOrderDec<Tkey>(pageIndex, pageSize, where, orderBy, out totalCount);
+        }
     }
 }

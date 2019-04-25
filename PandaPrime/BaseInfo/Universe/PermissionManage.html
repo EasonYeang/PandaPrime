@@ -14,12 +14,42 @@
     <script src="../../plugins/elementUI/index.js"></script>
     <script src="../../plugins/vue/browser.min.js"></script>
     <script src="../../plugins/vue/polyfill.min.js"></script>
+    <script src="../../PrimeJS/extend.js"></script>
     <script src="../../PrimeJS/PublicJs.js"></script>
-    <script src="../../PrimeJS/PermissionManage.js" type="text/babel"></script>
+    <script src="../../PrimeJS/PermissionManage.js" type="text/babel">
+    </script>
 </head>
 <body>
     <div id="app">
-  
+        <el-row>
+            <template>
+                <el-table :data="tableData"
+                          border
+                          style="width: 100%">
+                    <el-table-column prop="Number"
+                                     label="目录编号"
+                                     width="100">
+                    </el-table-column>
+                    <el-table-column prop="Title"
+                                     label="目录名称"
+                                     width="180">
+                    </el-table-column>
+                    <el-table-column prop="Path"
+                                     label="路径">
+                    </el-table-column>
+                </el-table>
+            </template>
+        </el-row>
+        <el-row class="pagination">
+            <el-pagination @size-change="handleSizeChange"
+                           @current-change="handleCurrentChange"
+                           :current-page="pageIndex"
+                           :page-sizes="[10, 20, 30]"
+                           :page-size="pageSize"
+                           layout="total, sizes, prev, pager, next, jumper"
+                           :total="total">
+            </el-pagination>
+        </el-row>
     </div>
 </body>
 </html>

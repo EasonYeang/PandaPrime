@@ -96,6 +96,20 @@ namespace Repository
             return DbSet.AsExpandable().Where(where).OrderBy(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
         }
 
+        /// <summary>
+        /// 根据条件查询实体集合并排序（分页）
+        /// </summary>
+        /// <typeparam name="Tkey"> 由 orderWhere 表示的函数返回的键类型</typeparam>
+        /// <param name="where">查询条件</param>
+        /// <param name="orderBy">用于从元素中提取键的函数</param>
+        /// <returns></returns>
+        public List<TEntity> GetListPagedOrderDec<Tkey>(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, Tkey>> orderBy, out int totalCount)
+        {
+            //获取总数
+            totalCount = DbSet.AsExpandable().Where(where).Count();
+            //需要增加AsExpandable(),否则查询的是所有数据到内存，然后再排序  AsExpandable是linqkit.dll中的方法
+            return DbSet.AsExpandable().Where(where).OrderByDescending(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+        }
 
         /// <summary>
         /// 根据条件删除

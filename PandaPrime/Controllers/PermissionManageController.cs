@@ -26,12 +26,17 @@ namespace PandaPrime.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetTableData()
+        public JsonResult GetTableData(int pageIndex, int pageSize)
         {
-            List<PPermission> result = _ppermissionService.GetList(r => !r.IsDelete.Value && r.Level > 0);
-            List<PPermissionDto> resultDto = Mapper.Map<List<PPermission>, List<PPermissionDto>>(result);
+            //List<PPermission> result = _ppermissionService.GetList(r => !r.IsDelete.Value && r.Level > 0);
+            int tc = 0;
 
-            return Json(resultDto);
+            List<PPermission> result = _ppermissionService.GetListPagedOrder(pageIndex, pageSize, r => !r.IsDelete.Value && r.Level == 0, r => r.SerialNumber, out tc);
+
+            List<PPermissionDto> resultDto = Mapper.Map<List<PPermission>, List<PPermissionDto>>(result);
+            var rs = new { PageData = resultDto, TC = tc };
+
+            return Json(rs);
         }
 
         [HttpPost]

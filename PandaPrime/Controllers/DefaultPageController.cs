@@ -203,5 +203,12 @@ namespace PandaPrime.Controllers
             List<string> result = _ppermissionService.GetList(p => li.Contains(p.SerialNumber)).Select(r => r.Name).ToList();
             return Json(result);
         }
+
+        [HttpPost]
+        public JsonResult GetSideLocation(int sn)
+        {
+            PPermission permission = _ppermissionService.FirstOrDefault(r => r.SerialNumber == sn);
+            return Json(permission.FilePath);
+        }
     }
 }
