@@ -19,7 +19,6 @@
                             $this.topActive = data[0].SerialNumber.toString();
                         }
                     }
-                    console.log($this);
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -27,7 +26,7 @@
             onSelectSide: function (key, keyPath) {
                 console.log(key, keyPath);
             },
-            onSelectTop: function (key, keyPath) {
+            onSelectTop: function (key) {
                 var $this = this;
                 $.axios({
                     url: '/DefaultPage/GetSidePermissions',
@@ -37,11 +36,18 @@
                         var data = response.data;
                         if (data !== null && data.length > 0) {
                             $this.sidePermissionList = data;
+                        } else {
+                            $this.sidePermissionList = [];
                         }
                     }
                 }).catch(function (error) {
                     console.log(error);
                 });
+            }
+        },
+        watch: {
+            topActive: function (val, oldVal) {
+                this.onSelectTop(val);
             }
         },
         mounted: function () {

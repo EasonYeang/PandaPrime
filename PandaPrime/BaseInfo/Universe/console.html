@@ -36,6 +36,10 @@
             background-color: rgb(84,92,100);
             max-height: 60px;
         }
+
+        .el-submenu__title {
+            min-width: 200px;
+        }
     </style>
 </head>
 <body>
@@ -59,7 +63,7 @@
                 </el-row>
             </el-header>
             <el-container>
-                <el-aside width="200px">
+                <el-aside style="width:200px;background-color:rgb(84,92,100);">
                     <div>
                         <el-row class="tac">
                             <el-col :span="24">
@@ -69,7 +73,7 @@
                                          background-color="#545c64"
                                          text-color="#fff"
                                          active-text-color="#ffd04b">
-                                    <el-menu-item v-if="item.Child == null" v-for="item in sidePermissionList" :key="item.SerialNumber.toString()" :index="item.SerialNumber.toString()">
+                                    <el-menu-item style="min-width:200px;" v-if="item.Child == null" v-for="item in sidePermissionList" :key="item.SerialNumber.toString()" :index="item.SerialNumber.toString()">
                                         <i class="el-icon-menu"></i>
                                         <span slot="title">{{item.Name}}</span>
                                     </el-menu-item>
@@ -113,7 +117,7 @@
             var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
             if (iframeWin.document.body) {
                 var Height = document.documentElement.clientHeight;
-                iframe.height = Height - 110;
+                iframe.height = Height - 105;
             }
         }
     };
