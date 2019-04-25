@@ -3,7 +3,8 @@
         el: '#app',
         data: {
             topPermissionList: [],
-            activeIndex2: '1'
+            sidePermissionList: [],
+            topActive: ''
         },
         methods: {
             getTopPermissions: function () {
@@ -15,28 +16,27 @@
                         var data = response.data;
                         if (data !== null && data.length > 0) {
                             $this.topPermissionList = data;
+                            $this.topActive = data[0].SerialNumber.toString();
                         }
                     }
+                    console.log($this);
                 }).catch(function (error) {
                     console.log(error);
                 });
             },
-            handleOpen: function (key, keyPath) {
-                console.log(key, keyPath);
-            },
-            handleClose: function (key, keyPath) {
+            onSelectSide: function (key, keyPath) {
                 console.log(key, keyPath);
             },
             onSelectTop: function (key, keyPath) {
                 var $this = this;
-                axios({
-                    method: 'post',
-                    url: '/DefaultPage/GetSidePermissions'
+                $.axios({
+                    url: '/DefaultPage/GetSidePermissions',
+                    data: { sn: key }
                 }).then(function (response) {
                     if (response !== null) {
                         var data = response.data;
                         if (data !== null && data.length > 0) {
-                            $this.permissionList = data;
+                            $this.sidePermissionList = data;
                         }
                     }
                 }).catch(function (error) {
