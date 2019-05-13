@@ -1,127 +1,201 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>主页面</title>
-    <!--Styles-->
-    <link href="../../plugins/elementUI/index.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
-    <!--Scripts-->
-    <script src="../../Scripts/jquery-1.10.2.min.js"></script>
+    <meta charset="utf-8">
+    <title>默认页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link href="../../plugins/layui/css/layui.css" rel="stylesheet" />
+    <link href="../../assets/main.css" rel="stylesheet" />
+    <script src="../../plugins/jquery/jquery.min.js"></script>
     <script src="../../plugins/vue/vue.js"></script>
-    <script src="../../plugins/vue/axios.min.js"></script>
-    <script src="../../PrimeJS/extend.js"></script>
-    <script src="../../plugins/vue/browser.min.js"></script>
-    <script src="../../plugins/vue/polyfill.min.js"></script>
-    <script src="../../plugins/elementUI/index.js"></script>
-    <script src="../../PrimeJS/PublicJs.js"></script>
-    <script src="../../PrimeJS/console.js" type="text/babel">
-    </script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .el-header {
-            padding: 0 0;
-        }
-
-        .el-submenu .el-menu-item {
-            /*min-width: 0;*/
-        }
-
-        .row-header {
-            background-color: rgb(84,92,100);
-            max-height: 60px;
-        }
-
-        .el-submenu__title {
-            min-width: 200px;
-        }
-    </style>
+    <script src="../../plugins/layui/layui.js"></script>
 </head>
-<body>
+<body class="layui-layout-body">
     <div id="app">
-        <el-container>
-            <el-header>
-                <el-row class="row-header">
-                    <el-col :span="6"></el-col>
-                    <el-col :span="12" :offset="6">
-                        <el-menu :default-active="topActive"
-                                 class="el-menu-demo"
-                                 mode="horizontal"
-                                 @select="onSelectTop"
-                                 background-color="#545c64"
-                                 text-color="#fff"
-                                 active-text-color="#ffd04b">
-                            <el-menu-item v-for="item in topPermissionList" :key="item.SerialNumber.toString()" :index="item.SerialNumber.toString()">{{item.Name}}</el-menu-item>
-                        </el-menu>
-                    </el-col>
-                    <el-col :span="6"></el-col>
-                </el-row>
-            </el-header>
-            <el-container>
-                <el-aside style="width:200px;background-color:rgb(84,92,100);">
-                    <div>
-                        <el-row class="tac">
-                            <el-col :span="24">
-                                <el-menu default-active="2"
-                                         class="el-menu-vertical-demo"
-                                         @select="onSelectSide"
-                                         background-color="#545c64"
-                                         text-color="#fff"
-                                         active-text-color="#ffd04b">
-                                    <el-menu-item style="min-width:200px;" v-if="item.Child == null" v-for="item in sidePermissionList" :key="item.SerialNumber.toString()" :index="item.SerialNumber.toString()">
-                                        <i class="el-icon-menu"></i>
-                                        <span slot="title">{{item.Name}}</span>
-                                    </el-menu-item>
-                                    <el-submenu v-if="item.Child != null" v-for="item in sidePermissionList" :key="item.SerialNumber.toString()" :index="item.SerialNumber.toString()">
-                                        <template slot="title">
-                                            <i class="el-icon-location"></i>
-                                            <span>{{item.Name}}</span>
-                                        </template>
-                                        <el-menu-item v-if="two.Child == null" v-for="two in item.Child" :key="two.SerialNumber.toString()" :index="two.SerialNumber.toString()">{{two.Name}}</el-menu-item>
-                                        <el-submenu v-if="two.Child != null" v-for="two in item.Child" :key="two.SerialNumber.toString()" :index="two.SerialNumber.toString()">
-                                            <template slot="title">
-                                                {{two.Name}}
-                                            </template>
-                                            <el-menu-item v-if="two.Child != null" v-for="three in two.Child" :key="three.SerialNumber.toString()" :index="three.SerialNumber.toString()">{{three.Name}}</el-menu-item>
-                                        </el-submenu>
-                                    </el-submenu>
-                                </el-menu>
-                            </el-col>
-                        </el-row>
+        <div class="layui-layout layui-layout-admin">
+            <div class="layui-header">
+                <!-- 头部区域 -->
+                <ul class="layui-nav layui-layout-left">
+                    <li class="layui-nav-item" lay-unselect @click="sideFlexible">
+                        <a href="javascript:;" title="侧边伸缩">
+                            <i class="layui-icon layui-icon-shrink-right"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+
+                    <li class="layui-nav-item" lay-unselect>
+                        <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
+                            <i class="layui-icon layui-icon-notice"></i>
+
+                            <!-- 如果有新消息，则显示小圆点 -->
+                            <span class="layui-badge-dot"></span>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="theme">
+                            <i class="layui-icon layui-icon-theme"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="note">
+                            <i class="layui-icon layui-icon-note"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;">
+                            <cite>超级管理员</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-href="set/user/info.html">基本资料</a></dd>
+                            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                            <dd layadmin-event="logout"><a>退出登录</a></dd>
+                        </dl>
+                    </li>
+
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                    </li>
+                    <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+                        <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 侧边菜单 -->
+            <div class="layui-side layui-side-menu">
+                <div class="layui-side-scroll">
+                    <div class="layui-logo" lay-href="home/console.html">
+                        <span>PANDA Prime</span>
                     </div>
-                </el-aside>
-                <el-main>
-                    <iframe id="iframe_content" frameborder="0" :src="src" width="100%" height="100%"></iframe>
-                </el-main>
-            </el-container>
-        </el-container>
+                    <ul class="layui-nav layui-nav-tree" lay-shrink="all" lay-filter="test">
+                        <li data-name="home" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+                                <i class="layui-icon layui-icon-home"></i>
+                                <cite>主页</cite>
+                                <span class="layui-nav-more"></span>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="console" class="">
+                                    <a lay-href="home/console.html">控制台</a>
+                                </dd>
+                                <dd data-name="console" class="">
+                                    <a lay-href="home/homepage1.html">主页一</a>
+                                </dd>
+                                <dd data-name="console" class="">
+                                    <a lay-href="home/homepage2.html">主页二</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li data-name="component" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="组件" lay-direction="2">
+                                <i class="layui-icon layui-icon-component"></i>
+                                <cite>组件</cite>
+                                <span class="layui-nav-more"></span>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="grid" class="layui-nav-itemed">
+                                    <a href="javascript:;">栅格<span class="layui-nav-more"></span></a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list" class=""><a lay-href="component/grid/list.html">等比例列表排列</a></dd>
+                                        <dd data-name="mobile"><a lay-href="component/grid/mobile.html">按移动端排列</a></dd>
+                                        <dd data-name="mobile-pc"><a lay-href="component/grid/mobile-pc.html">移动桌面端组合</a></dd>
+                                        <dd data-name="all" class=""><a lay-href="component/grid/all.html">全端复杂组合</a></dd>
+                                        <dd data-name="stack" class=""><a lay-href="component/grid/stack.html">低于桌面堆叠排列</a></dd>
+                                        <dd data-name="speed-dial"><a lay-href="component/grid/speed-dial.html">九宫格</a></dd>
+                                    </dl>
+                                </dd>
+                                <dd data-name="button">
+                                    <a lay-href="component/button/index.html">按钮</a>
+                                </dd>
+                                <dd data-name="form">
+                                    <a href="javascript:;">表单<span class="layui-nav-more"></span></a>
+                                    <dl class="layui-nav-child">
+                                        <dd><a lay-href="component/form/element.html">表单元素</a></dd>
+                                        <dd><a lay-href="component/form/group.html">表单组合</a></dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <!-- 主体内容 -->
+            <div class="layui-body" id="LAY_app_body">
+                <div class="layadmin-tabsbody-item layui-show">
+                    <!--<iframe src="home/console.html" frameborder="0" class="layadmin-iframe"></iframe>-->
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
 <script>
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+
     $(function () {
 
-    });
-    window.onload = function () {
-        var Width = document.documentElement.clientWidth;
-        //   $("#external-frame").width(Width - 240);
-        setIframeHeight(document.getElementById('iframe_content'));
-    };
-    function setIframeHeight(iframe) {
-        if (iframe) {
-            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-            if (iframeWin.document.body) {
-                var Height = document.documentElement.clientHeight;
-                iframe.height = Height - 105;
+        var app = new Vue({
+            el: '#app',
+            data: {
+                showSide: true
+            },
+            methods: {
+                sideFlexible: function () {
+                    $('.layui-nav-tree span').each(function () {
+                        if ($(this).is(':hidden')) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+
+                    $('.layui-nav-tree cite').each(function () {
+                        if ($(this).is(':hidden')) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+
+                    //判断isshow的状态
+                    if (this.showSide) {
+                        $('.layui-side').width(60); //设置宽度
+                        $('.layui-nav-tree i').css('margin-right', '70%');  //修改图标的位置
+                        ////将footer和body的宽度修改
+                        //$('.layui-body').css('left', 60 + 'px');
+                        //$('.layui-footer').css('left', 60 + 'px');
+                        //将二级导航栏隐藏
+                        $('dd a').each(function () {
+                            $(this).hide();
+                        });
+                        $('.layui-nav-item').removeClass('layui-nav-itemed');
+                        //修改标志位
+                        this.showSide = false;
+                    } else {
+                        $('.layui-side').width(220);
+                        $('.layui-nav-tree i').css('margin-right', '10%');
+                        $('.layui-body').css('left', 200 + 'px');
+                        $('.layui-footer').css('left', 200 + 'px');
+                        $('dd a').each(function () {
+                            $(this).show();
+                        });
+                        this.showSide = true;
+                    }
+                }
             }
-        }
-    };
-    window.onresize = function () {
-        setIframeHeight(document.getElementById('iframe_content'));
-    }
+        });
+    });
+
 </script>
+
+
