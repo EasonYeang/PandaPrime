@@ -8,24 +8,104 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link href="../../plugins/layui/css/layui.css" rel="stylesheet" />
+    <link href="../../plugins/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <link href="../../plugins/layuiadmin/style/admin.css" rel="stylesheet" />
     <link href="../../assets/main.css" rel="stylesheet" />
     <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="../../plugins/vue/axios.min.js"></script>
+    <script src="../../PrimeJS/extend.js"></script>
     <script src="../../plugins/vue/vue.js"></script>
-    <script src="../../plugins/layui/layui.js"></script>
+    <script src="../../plugins/layuiadmin/layui/layui.js"></script>
+    <script src="../../Scripts/browser.min.js"></script>
+    <script src="../../Scripts/polyfill.min.js"></script>
+    <!--<script src="../../PrimeJS/console.js" type="text/babel">
+    </script>-->
+    <script>
+        $(function () {
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    topPermissionList: [],
+                    sidePermissionList: [],
+                    topActive: '',
+                    src: '../../BaseInfo/Universe/welcome.html'
+                },
+                methods: {
+                    getTopPermissions: function () {
+                        var $this = this;
+                        $.axios({
+                            url: '/DefaultPage/GetTopPermissions',
+                        }).then(function (response) {
+                            if (response !== null) {
+                                var data = response.data;
+                                if (data !== null && data.length > 0) {
+                                    $this.topPermissionList = data;
+                                    $this.topActive = data[0].SerialNumber.toString();
+                                }
+                            }
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    },
+                    onSelectSide: function (key) {
+                        var $this = this;
+                        $.axios({
+                            url: '/DefaultPage/GetSideLocation',
+                            data: { sn: key }
+                        }).then(function (response) {
+                            if (response !== null) {
+                                var data = response.data;
+                                if (data !== null && data.length > 0) {
+                                    $this.src = data + '?tS=' + getGuid();
+                                }
+                            }
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    },
+                    onSelectTop: function (key) {
+                        var $this = this;
+                        $.axios({
+                            url: '/DefaultPage/GetSidePermissions',
+                            data: { sn: key }
+                        }).then(function (response) {
+                            if (response !== null) {
+                                var data = response.data;
+                                if (data !== null && data.length > 0) {
+                                    $this.sidePermissionList = data;
+                                } else {
+                                    $this.sidePermissionList = [];
+                                }
+                            }
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    }
+                },
+                watch: {
+                    topActive: function (val, oldVal) {
+                        this.onSelectTop(val);
+                    }
+                },
+                mounted: function () {
+                    this.getTopPermissions();
+                }
+            });
+        });
+    </script>
 </head>
 <body class="layui-layout-body">
-    <div id="app">
+    <div id="LAY_app">
         <div class="layui-layout layui-layout-admin">
             <div class="layui-header">
                 <!-- 头部区域 -->
-                <!--<ul class="layui-nav layui-layout-left">
-                    <li class="layui-nav-item" lay-unselect @click="sideFlexible">
-                        <a href="javascript:;" title="侧边伸缩">
-                            <i class="layui-icon layui-icon-shrink-right"></i>
+                <ul class="layui-nav layui-layout-left">
+                    <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                        <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                            <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
                         </a>
                     </li>
-                </ul>-->
+                </ul>
                 <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
 
                     <li class="layui-nav-item" lay-unselect>
@@ -72,67 +152,43 @@
                     <div class="layui-logo" lay-href="home/console.html">
                         <span>PANDA Prime</span>
                     </div>
-                    <ul class="layui-nav layui-nav-tree" lay-shrink="all" lay-filter="test">
-                        <li data-name="home" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="主页" lay-direction="2">
-                                <i class="layui-icon layui-icon-home"></i>
-                                <cite>主页</cite>
-                                <span class="layui-nav-more"></span>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="console" class="">
-                                    <a lay-href="home/console.html">控制台</a>
-                                </dd>
-                                <dd data-name="console" class="">
-                                    <a lay-href="home/homepage1.html">主页一</a>
-                                </dd>
-                                <dd data-name="console" class="">
-                                    <a lay-href="home/homepage2.html">主页二</a>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li data-name="component" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="组件" lay-direction="2">
-                                <i class="layui-icon layui-icon-component"></i>
-                                <cite>组件</cite>
-                                <span class="layui-nav-more"></span>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="grid" class="layui-nav-itemed">
-                                    <a href="javascript:;">栅格<span class="layui-nav-more"></span></a>
-                                    <dl class="layui-nav-child">
-                                        <dd data-name="list" class=""><a lay-href="component/grid/list.html">等比例列表排列</a></dd>
-                                        <dd data-name="mobile"><a lay-href="component/grid/mobile.html">按移动端排列</a></dd>
-                                        <dd data-name="mobile-pc"><a lay-href="component/grid/mobile-pc.html">移动桌面端组合</a></dd>
-                                        <dd data-name="all" class=""><a lay-href="component/grid/all.html">全端复杂组合</a></dd>
-                                        <dd data-name="stack" class=""><a lay-href="component/grid/stack.html">低于桌面堆叠排列</a></dd>
-                                        <dd data-name="speed-dial"><a lay-href="component/grid/speed-dial.html">九宫格</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd data-name="button">
-                                    <a lay-href="component/button/index.html">按钮</a>
-                                </dd>
-                                <dd data-name="form">
-                                    <a href="javascript:;">表单<span class="layui-nav-more"></span></a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a lay-href="component/form/element.html">表单元素</a></dd>
-                                        <dd><a lay-href="component/form/group.html">表单组合</a></dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-                        </li>
-                    </ul>
+                    <div id="app" v-cloak>
+                        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+                            <li class="layui-nav-item" v-for="item in sidePermissionList" v-if="item.Child == null">
+                                <a href="javascript:;" lay-href="//www.layui.com/admin/#get" :lay-tips="item.Name" lay-direction="2">
+                                    <i class="layui-icon layui-icon-auz"></i>
+                                    <cite>{{item.Name}}</cite>
+                                </a>
+                            </li>
+                            <li class="layui-nav-item" v-else>
+                                <a href="javascript:;" :lay-tips="item.Name" lay-direction="2">
+                                    <i class="layui-icon layui-icon-component"></i>
+                                    <cite>{{item.Name}}</cite>
+                                </a>
+                                <dl class="layui-nav-child" v-for="two in item.Child" v-if="two.Child == null">
+                                    <dd>
+                                        <a lay-href="component/button/index.html">{{two.Name}}</a>
+                                    </dd>
+                                </dl>
+                                <dl class="layui-nav-child" v-else>
+                                    <dd>
+                                        <a href="javascript:;">{{two.Name}}</a>
+                                        <dl class="layui-nav-child" v-for="three in two.Child">
+                                            <dd><a lay-href="component/grid/list.html">{{three.Name}}</a></dd>
+                                        </dl>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-
-
             <!-- 主体内容 -->
-            <div class="layui-body">
-                <!--<div class="layadmin-tabsbody-item layui-show">
-        <iframe src="home/console.html" frameborder="0" class="layadmin-iframe"></iframe>
-    </div>-->
-                <iframe src="../Universe/welcome.html" frameborder="0" class="layadmin-iframe"></iframe>
+            <div class="layui-body" id="LAY_app_body">
+                <div class="layadmin-tabsbody-item layui-show">
+                    <iframe src="welcome.html" frameborder="0" class="layadmin-iframe"></iframe>
+                </div>
             </div>
         </div>
     </div>
@@ -142,60 +198,11 @@
     layui.use('element', function () {
         var element = layui.element;
     });
-
-    $(function () {
-
-        var app = new Vue({
-            el: '#app',
-            data: {
-                showSide: true
-            },
-            methods: {
-                sideFlexible: function () {
-                    $('.layui-nav-tree span').each(function () {
-                        if ($(this).is(':hidden')) {
-                            $(this).show();
-                        } else {
-                            $(this).hide();
-                        }
-                    });
-
-                    $('.layui-nav-tree cite').each(function () {
-                        if ($(this).is(':hidden')) {
-                            $(this).show();
-                        } else {
-                            $(this).hide();
-                        }
-                    });
-
-                    //判断isshow的状态
-                    if (this.showSide) {
-                        $('.layui-side').width(60); //设置宽度
-                        $('.layui-nav-tree i').css('margin-right', '70%');  //修改图标的位置
-                        ////将footer和body的宽度修改
-                        //$('.layui-body').css('left', 60 + 'px');
-                        //$('.layui-footer').css('left', 60 + 'px');
-                        //将二级导航栏隐藏
-                        $('dd a').each(function () {
-                            $(this).hide();
-                        });
-                        $('.layui-nav-item').removeClass('layui-nav-itemed');
-                        //修改标志位
-                        this.showSide = false;
-                    } else {
-                        $('.layui-side').width(220);
-                        $('.layui-nav-tree i').css('margin-right', '10%');
-                        $('.layui-body').css('left', 200 + 'px');
-                        $('.layui-footer').css('left', 200 + 'px');
-                        $('dd a').each(function () {
-                            $(this).show();
-                        });
-                        this.showSide = true;
-                    }
-                }
-            }
-        });
-    });
+    layui.config({
+        base: '../../plugins/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use('index');
 
 </script>
 
