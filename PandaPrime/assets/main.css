@@ -1,3 +1,7 @@
 ﻿[v-cloak] {
     display: none;
 }
+
+.layui-layout-admin .layui-body {
+    top: 50px;
+}

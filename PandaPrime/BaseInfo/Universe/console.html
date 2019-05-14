@@ -18,6 +18,7 @@
     <script src="../../plugins/layuiadmin/layui/layui.js"></script>
     <script src="../../Scripts/browser.min.js"></script>
     <script src="../../Scripts/polyfill.min.js"></script>
+    <script src="../../PrimeJS/PublicJs.js"></script>
     <!--<script src="../../PrimeJS/console.js" type="text/babel">
     </script>-->
     <script>
@@ -92,6 +93,17 @@
                                 }
                             }
                         }).catch((error) => { console.log(error) });
+                    },
+                    clickSide: function (filePath) {
+                        console.log(filePath);
+                        if (filePath != null) {
+                            if (filePath.indexOf('?') === -1) {
+                                filePath = `${filePath}?timeStamp=${timeStamp()}`;
+                            } else {
+                                filePath = `${filePath}&timeStamp=${timeStamp()}`;
+                            }
+                            this.src = filePath;
+                        }
                     }
                 },
                 watch: {
@@ -167,7 +179,7 @@
                     <div>
                         <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
                             <li class="layui-nav-item" v-for="item in sidePermissionList" v-if="item.Child == null">
-                                <a href="javascript:;" lay-href="//www.layui.com/admin/#get" :lay-tips="item.Name" lay-direction="2">
+                                <a href="javascript:;" @click="clickSide(item.FilePath)" :lay-tips="item.Name" lay-direction="2">
                                     <i class="layui-icon layui-icon-auz"></i>
                                     <cite>{{item.Name}}</cite>
                                 </a>
@@ -179,14 +191,14 @@
                                 </a>
                                 <dl class="layui-nav-child" v-for="two in item.Child" v-if="two.Child == null">
                                     <dd>
-                                        <a lay-href="component/button/index.html">{{two.Name}}</a>
+                                        <a href="javascript:;" @click="clickSide(two.FilePath)">{{two.Name}}</a>
                                     </dd>
                                 </dl>
                                 <dl class="layui-nav-child" v-else>
                                     <dd>
                                         <a href="javascript:;">{{two.Name}}</a>
                                         <dl class="layui-nav-child" v-for="three in two.Child">
-                                            <dd><a lay-href="component/grid/list.html">{{three.Name}}</a></dd>
+                                            <dd><a href="javascript:;" @click="clickSide(three.FilePath)">{{three.Name}}</a></dd>
                                         </dl>
                                     </dd>
                                 </dl>
@@ -199,7 +211,7 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show">
-                    <iframe src="welcome.html" frameborder="0" class="layadmin-iframe"></iframe>
+                    <iframe :src="src" frameborder="0" class="layadmin-iframe"></iframe>
                 </div>
             </div>
         </div>
