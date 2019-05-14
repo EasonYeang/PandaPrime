@@ -10,8 +10,7 @@ html #layuicss-layuiAdmin {
 }
 
 html {
-    background-color: #f2f2f2;
-    color: #666
+    background-color: #f2f2f2; /* color:#666 */
 }
 
 .layadmin-tabsbody-item, [template] {
@@ -77,7 +76,7 @@ html {
 
 .layui-layout-admin .layui-body {
     position: fixed;
-    /*top: 90px;*/
+    top: 90px;
     bottom: 0
 }
 

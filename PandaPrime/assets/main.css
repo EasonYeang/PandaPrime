@@ -1,7 +1,12 @@
-﻿[v-cloak] {
+﻿html {
+    background-color: #f2f2f2;
+    color: #666;
+}
+
+[v-cloak] {
     display: none;
 }
 
 .layui-layout-admin .layui-body {
-    top: 50px;
+    top: 90px;
 }
