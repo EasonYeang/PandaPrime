@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>登录</title>
+    <!--main css-->
+    <link href="../../dist/css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="../../plugins/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../plugins/font-awesome/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../plugins/iCheck/square/blue.css" rel="stylesheet" />
+    <!--main js-->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="../../PrimeJS/extend.js"></script>
+    <script src="../../plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="../../plugins/iCheck/icheck.min.js"></script>
+    <script src="../../plugins/bootbox/bootbox.min.js"></script>
+    <script src="../../PrimeJS/PublicJs.js"></script>
+
+    <!-------------------------------------------------------------------------->
+    <script src="../../PrimeJS/Login.js"></script>
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <style type="text/css">
+        body {
+            overflow: hidden;
+        }
+
+        .login-box-msg {
+            font-size: 18px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="hold-transition login-page" onkeydown="keyDown();">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Panda Prime</p>
+
+            <form action="#" method="post">
+                <div class="form-group has-feedback">
+                    <input id="Account" class="form-control" placeholder="账户" autocomplete="off">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" id="Password" class="form-control" placeholder="密码">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <input class="form-control" id="ValidateCode" placeholder="验证码" autocomplete="off" />
+                    </div>
+                    <div class="col-xs-3" style="margin-top:4px;">
+                        <img id="codeImg" src="/Login/ValidateCode" onclick="refreshCode()" style="cursor: pointer;" />
+                    </div>
+                    <div class="col-xs-3" style="margin-top:10px;">
+                        <a href="javascript:void(0)" onclick="refreshCode()">看不清？</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="button" id="signIn" class="btn btn-primary btn-block btn-flat">登 录</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
+    });
+
+    function keyDown() {
+        if (event.keyCode == 13) {
+            $('#signIn').focus();
+            $('#signIn').click();
+        }
+    }
+</script>

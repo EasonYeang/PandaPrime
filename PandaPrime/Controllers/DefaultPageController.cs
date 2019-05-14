@@ -31,7 +31,7 @@ namespace PandaPrime.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult LogOut()
+        public ActionResult LogOut()
         {
             Session.Clear();
             int flag = 1;
