@@ -52,9 +52,9 @@
             this.getSidePermissionList(1);
             console.log(this);
 
-            window.layui.use('element', function () {
-                var element = layui.element;
-            });
+            //window.layui.use('element', function () {
+            //    var element = layui.element;
+            //});
         }
     });
 

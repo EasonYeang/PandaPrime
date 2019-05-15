@@ -7,10 +7,7 @@
     display: none;
 }
 
-.layui-layout-admin .layui-body {
-    top: 90px;
-}
-
-.sideNav {
-    top: 49px;
+.iframe {
+    /*position: absolute;*/
+    width: 100%;
 }

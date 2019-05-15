@@ -45,7 +45,7 @@
                             }
                         });
                     } else {
-                        window.location.href = "/BaseInfo/Universe/console.html";
+                        window.location.href = "/BaseInfo/Universe/default.html";
                     }
                 }
             }
