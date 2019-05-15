@@ -304,13 +304,13 @@
             <!-- 侧边导航 -->
             <section class="sidebar">
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li v-for="item in sidePermissionList" v-if="item.Child == null">
+                    <li v-bind:class="activeNav===item.SerialNumber?'active':''" v-for="item in sidePermissionList" v-if="item.Child == null">
                         <a href="#" @click="clickSide(item.FilePath)">
                             <i class="fa fa-book"></i>
                             <span>{{item.Name}}</span>
                         </a>
                     </li>
-                    <li class="treeview" v-else>
+                    <li v-bind:class="activeNav===item.SerialNumber?'active':''" class="treeview" v-else>
                         <a href="#">
                             <i class="fa fa-share"></i>
                             <span>{{item.Name}}</span>

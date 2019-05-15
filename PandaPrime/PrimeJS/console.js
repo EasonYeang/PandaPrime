@@ -3,7 +3,8 @@
         el: '#app',
         data: {
             sidePermissionList: [],
-            src: '../../BaseInfo/Universe/welcome.html'
+            src: '../../BaseInfo/Universe/welcome.html',
+            activeNav: 3
         },
         methods: {
             getSidePermissionList: function (key) {
