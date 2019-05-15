@@ -381,6 +381,9 @@
     <Content Include="plugins\bootbox\bootbox.min.js" />
     <Content Include="plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="plugins\bootstrap-slider\slider.css" />
+    <Content Include="plugins\bootstrap-table\css\bootstrap-table.min.css" />
+    <Content Include="plugins\bootstrap-table\js\bootstrap-table-zh-CN.min.js" />
+    <Content Include="plugins\bootstrap-table\js\bootstrap-table.min.js" />
     <Content Include="plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
     <Content Include="plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.min.js" />
     <Content Include="plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.css" />
