@@ -12,6 +12,9 @@
     width: 100%;
 }
 
-.wrapper {
+.wrap {
     background-color: #ecf0f5;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
 }

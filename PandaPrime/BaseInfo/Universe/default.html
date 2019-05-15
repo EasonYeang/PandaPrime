@@ -363,7 +363,7 @@
             </section>
             <!-- Main content -->
             <section class="content">
-                <iframe id="iframe_content" :src="src" frameborder="0" class="iframe"></iframe>
+                <iframe id="iframe_content" :src="src" frameborder="0" onload="iframeLoad()" height="100%" class="iframe"></iframe>
             </section>
             <!--<iframe id="iframe_content" :src="src" frameborder="0" class="content"></iframe>-->
             <!-- /.content -->
@@ -565,23 +565,27 @@
 </body>
 </html>
 <script>
-    window.onload = function () {
-        var Width = document.documentElement.clientWidth;
-        //   $("#external-frame").width(Width - 240);
-        setIframeHeight(document.getElementById('iframe_content'));
-    };
-    function setIframeHeight(iframe) {
-        if (iframe) {
-            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-            if (iframeWin.document.body) {
-                var Height = document.documentElement.clientHeight;
-                //alert(Height);
-                iframe.height = Height - 50 - 51 - 41 - 30 - 5;
-                //alert(iframe.height);
-            }
-        }
-    };
-    window.onresize = function () {
-        setIframeHeight(document.getElementById('iframe_content'));
+        //window.onload = function () {
+        //    var Width = document.documentElement.clientWidth;
+        //    //   $("#external-frame").width(Width - 240);
+        //    setIframeHeight(document.getElementById('iframe_content'));
+        //};
+        //function setIframeHeight(iframe) {
+        //    if (iframe) {
+        //        var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+        //        if (iframeWin.document.body) {
+        //            var Height = document.documentElement.clientHeight;
+        //            //alert(Height);
+        //            iframe.height = Height - 50 - 51 - 41 - 30 - 5;
+        //            //alert(iframe.height);
+        //        }
+        //    }
+        //};
+        //window.onresize = function () {
+        //    setIframeHeight(document.getElementById('iframe_content'));
+        //}
+    function iframeLoad() {
+        document.getElementById("iframe_content").height = 0;
+        document.getElementById("iframe_content").height = document.getElementById("iframe_content").contentWindow.document.body.scrollHeight;
     }
 </script>
