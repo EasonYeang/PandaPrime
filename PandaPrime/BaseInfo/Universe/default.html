@@ -305,7 +305,7 @@
             <section class="sidebar">
                 <ul class="sidebar-menu" data-widget="tree">
                     <li v-bind:class="activeNav===item.SerialNumber?'active':''" v-for="item in sidePermissionList" v-if="item.Child == null">
-                        <a href="#" @click="clickSide(item.FilePath)">
+                        <a href="#" @click="clickSide(item)">
                             <i class="fa fa-book"></i>
                             <span>{{item.Name}}</span>
                         </a>
@@ -319,7 +319,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li v-for="two in item.Child" v-if="two.Child == null"><a href="#" @click="clickSide(two.FilePath)"><i class="fa fa-circle-o"></i> {{two.Name}}</a></li>
+                            <li v-for="two in item.Child" v-if="two.Child == null"><a href="#" @click="clickSide(two)"><i class="fa fa-circle-o"></i> {{two.Name}}</a></li>
                             <li class="treeview" v-else>
                                 <a href="#">
                                     <i class="fa fa-circle-o"></i> {{two.Name}}
@@ -328,7 +328,7 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li v-for="three in two.Child" v-if="three.Child == null"><a href="javascript:;" @click="clickSide(three.FilePath)"><i class="fa fa-circle-o"></i> {{three.Name}}</a></li>
+                                    <li v-for="three in two.Child" v-if="three.Child == null"><a href="javascript:;" @click="clickSide(three)"><i class="fa fa-circle-o"></i> {{three.Name}}</a></li>
                                     <li class="treeview" v-else>
                                         <a href="#">
                                             <i class="fa fa-circle-o"></i> {{three.Name}}
@@ -337,7 +337,7 @@
                                             </span>
                                         </a>
                                         <ul class="treeview-menu">
-                                            <li v-for="four in three.Child" v-if="four.Child == null"><a href="#" @click="clickSide(four.FilePath)"><i class="fa fa-circle-o"></i> {{four.Name}}</a></li>
+                                            <li v-for="four in three.Child" v-if="four.Child == null"><a href="#" @click="clickSide(four)"><i class="fa fa-circle-o"></i> {{four.Name}}</a></li>
                                         </ul>
                                     </li>
                                 </ul>

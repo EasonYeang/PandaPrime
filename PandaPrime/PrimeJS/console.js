@@ -37,8 +37,13 @@
                     }
                 }).catch((error) => { console.log(error) });
             },
-            clickSide: function (filePath) {
-                console.log(filePath);
+            clickSide: function (detail) {
+                var filePath = detail.FilePath;
+                if (detail.Level === 1) {
+                    this.activeNav = detail.SerialNumber;
+                } else {
+                    this.calActiveNav(detail.ParentSN);
+                }
                 if (filePath != null) {
                     if (filePath.indexOf('?') === -1) {
                         filePath = `${filePath}?timeStamp=${timeStamp()}`;
@@ -47,15 +52,22 @@
                     }
                     this.src = filePath;
                 }
+            },
+            calActiveNav: function (psn) {
+                var THIS = this;
+                $.axios({
+                    url: '/DefaultPage/CalActiveNav',
+                    data: { psn: psn }
+                }).then((response) => {
+                    var data = response.data;
+                    if (data != null) {
+                        THIS.activeNav = data;
+                    }
+                }).catch((error) => { console.log(error) });
             }
         },
         mounted: function () {
             this.getSidePermissionList(1);
-            console.log(this);
-
-            //window.layui.use('element', function () {
-            //    var element = layui.element;
-            //});
         }
     });
 
