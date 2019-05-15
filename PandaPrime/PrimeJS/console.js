@@ -4,7 +4,8 @@
         data: {
             sidePermissionList: [],
             src: '../../BaseInfo/Universe/welcome.html',
-            activeNav: 3
+            activeNav: 7,
+            active: 0
         },
         methods: {
             getSidePermissionList: function (key) {
@@ -39,11 +40,13 @@
             },
             clickSide: function (detail) {
                 var filePath = detail.FilePath;
+                //一级菜单选中
                 if (detail.Level === 1) {
                     this.activeNav = detail.SerialNumber;
                 } else {
                     this.calActiveNav(detail.ParentSN);
                 }
+
                 if (filePath != null) {
                     if (filePath.indexOf('?') === -1) {
                         filePath = `${filePath}?timeStamp=${timeStamp()}`;

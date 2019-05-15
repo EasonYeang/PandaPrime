@@ -11,3 +11,7 @@
     /*position: absolute;*/
     width: 100%;
 }
+
+.wrapper {
+    background-color: #ecf0f5;
+}
