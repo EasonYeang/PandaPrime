@@ -350,7 +350,6 @@
         </aside>
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
                     Dashboard
@@ -362,20 +361,11 @@
                 </ol>
             </section>
             <!-- Main content -->
-            <section class="content">
-                <iframe id="iframe_content" :src="src" frameborder="0" class="iframe"></iframe>
-            </section>
-            <!--<iframe id="iframe_content" :src="src" frameborder="0" class="content"></iframe>-->
+            <iframe id="iframe_content" :src="src" frameborder="0" width="100%" class="content"></iframe>
             <!-- /.content -->
         </div>
+
         <!-- /.content-wrapper -->
-        <footer class="main-footer">
-            <div class="pull-right hidden-xs">
-                <b>Version</b> 2.4.0
-            </div>
-            <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-            reserved.
-        </footer>
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Create the tabs -->
@@ -543,7 +533,7 @@
         </aside>
         <!-- /.control-sidebar -->
         <!-- Add the sidebar's background. This div must be placed
-             immediately after the control sidebar -->
+         immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
@@ -565,36 +555,21 @@
 </body>
 </html>
 <script>
-    //window.onload = function () {
-    //    var Width = document.documentElement.clientWidth;
-    //    //   $("#external-frame").width(Width - 240);
-    //    setIframeHeight(document.getElementById('iframe_content'));
-    //};
-    //function setIframeHeight(iframe) {
-    //    if (iframe) {
-    //        var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-    //        if (iframeWin.document.body) {
-    //            var Height = document.documentElement.clientHeight;
-    //            //alert(Height);
-    //            iframe.height = Height - 50 - 51 - 41 - 30 - 5;
-    //            //alert(iframe.height);
-    //        }
-    //    }
-    //};
-    //window.onresize = function () {
-    //    setIframeHeight(document.getElementById('iframe_content'));
-    //}
-    $(function () {
-   
-
-        $('#iframe_content').on('load', function () {
-            iframeLoad();
-        });
-    });
-
-    function iframeLoad() {
-        document.getElementById("iframe_content").height = 0;
-        document.getElementById("iframe_content").height = document.getElementById("iframe_content").contentWindow.document.body.scrollHeight;
-        alert(document.getElementById("iframe_content").contentWindow.document.body.scrollHeight);
+    window.onload = function () {
+        var Width = document.documentElement.clientWidth;
+        //   $("#external-frame").width(Width - 240);
+        setIframeHeight(document.getElementById('iframe_content'));
+    };
+    function setIframeHeight(iframe) {
+        if (iframe) {
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                var Height = document.documentElement.clientHeight;
+                iframe.height = Height - 50 - 30 - 5;
+            }
+        }
+    };
+    window.onresize = function () {
+        setIframeHeight(document.getElementById('iframe_content'));
     }
 </script>
