@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>主页面</title>
+    <!--Styles-->
+    <link href="../../plugins/elementUI/index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!--Scripts-->
+    <script src="../../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../../plugins/vue/vue.js"></script>
+    <script src="../../plugins/vue/axios.min.js"></script>
+    <script src="../../PrimeJS/extend.js"></script>
+    <script src="../../plugins/vue/browser.min.js"></script>
+    <script src="../../plugins/vue/polyfill.min.js"></script>
+    <script src="../../plugins/elementUI/index.js"></script>
+    <script src="../../PrimeJS/PublicJs.js"></script>
+    <script src="../../PrimeJS/console.js" type="text/babel">
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .el-header {
+            padding: 0 0;
+        }
+
+        .el-submenu .el-menu-item {
+            /*min-width: 0;*/
+        }
+
+        .row-header {
+            background-color: rgb(84,92,100);
+            max-height: 60px;
+        }
+
+        .el-submenu__title {
+            min-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <el-row class="row-header">
+                    <el-col :span="6"></el-col>
+                    <el-col :span="12" :offset="6">
+                        <el-menu :default-active="topActive"
+                                 class="el-menu-demo"
+                                 mode="horizontal"
+                                 @select="onSelectTop"
+                                 background-color="#545c64"
+                                 text-color="#fff"
+                                 active-text-color="#ffd04b">
+                            <el-menu-item v-for="item in topPermissionList" :key="item.SerialNumber.toString()" :index="item.SerialNumber.toString()">{{item.Name}}</el-menu-item>
+                        </el-menu>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-dropdown>
+                            <span class="el-dropdown-link">
+                                下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>黄金糕</el-dropdown-item>
+                                <el-dropdown-item>狮子头</el-dropdown-item>
+                                <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                                <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+                                <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </el-col>
+                </el-row>
+            </el-header>
+            <el-container>
+                <el-aside style="width:200px;background-color:rgb(84,92,100);">
+                    <div>
+                        <el-row class="tac">
+                            <el-col :span="24">
+                                <el-menu default-active="2"
+                                         class="el-menu-vertical-demo"
+                                         @select="onSelectSide"
+                                         background-color="#545c64"
+                                         text-color="#fff"
+                                         active-text-color="#ffd04b">
+                                    <el-menu-item style="min-width:200px;" v-if="item.Child == null" v-for="item in sidePermissionList" :key="item.SerialNumber.toString()" :index="item.SerialNumber.toString()">
+                                        <i class="el-icon-menu"></i>
+                                        <span slot="title">{{item.Name}}</span>
+                                    </el-menu-item>
+                                    <el-submenu v-if="item.Child != null" v-for="item in sidePermissionList" :key="item.SerialNumber.toString()" :index="item.SerialNumber.toString()">
+                                        <template slot="title">
+                                            <i class="el-icon-location"></i>
+                                            <span>{{item.Name}}</span>
+                                        </template>
+                                        <el-menu-item v-if="two.Child == null" v-for="two in item.Child" :key="two.SerialNumber.toString()" :index="two.SerialNumber.toString()">{{two.Name}}</el-menu-item>
+                                        <el-submenu v-if="two.Child != null" v-for="two in item.Child" :key="two.SerialNumber.toString()" :index="two.SerialNumber.toString()">
+                                            <template slot="title">
+                                                {{two.Name}}
+                                            </template>
+                                            <el-menu-item v-if="two.Child != null" v-for="three in two.Child" :key="three.SerialNumber.toString()" :index="three.SerialNumber.toString()">{{three.Name}}</el-menu-item>
+                                        </el-submenu>
+                                    </el-submenu>
+                                </el-menu>
+                            </el-col>
+                        </el-row>
+                    </div>
+                </el-aside>
+                <el-main>
+                    <iframe id="iframe_content" frameborder="0" :src="src" width="100%" height="100%"></iframe>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+
+    });
+    window.onload = function () {
+        var Width = document.documentElement.clientWidth;
+        //   $("#external-frame").width(Width - 240);
+        setIframeHeight(document.getElementById('iframe_content'));
+    };
+    function setIframeHeight(iframe) {
+        if (iframe) {
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                var Height = document.documentElement.clientHeight;
+                iframe.height = Height - 105;
+            }
+        }
+    };
+    window.onresize = function () {
+        setIframeHeight(document.getElementById('iframe_content'));
+    }
+</script>

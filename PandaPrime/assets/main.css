@@ -1,7 +1,24 @@
-﻿body {
-    padding:15px;
+﻿html {
+    background-color: #f2f2f2;
+    color: #666;
 }
 
-.pagination{
-    margin-top:15px;
+[v-cloak] {
+    display: none;
+}
+
+.iframe {
+    /*position: absolute;*/
+    width: 100%;
+}
+
+.wrap {
+    background-color: #ecf0f5;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.table {
+    table-layout: fixed;
 }

@@ -31,7 +31,7 @@ namespace PandaPrime.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult LogOut()
+        public ActionResult LogOut()
         {
             Session.Clear();
             int flag = 1;
@@ -210,5 +210,25 @@ namespace PandaPrime.Controllers
             PPermission permission = _ppermissionService.FirstOrDefault(r => r.SerialNumber == sn);
             return Json(permission.FilePath);
         }
+
+        #region 计算当前左侧菜单的选中值
+
+        [HttpPost]
+        public int CalActiveNav(int psn)
+        {
+            int tmp = 0;
+            PPermission permission = _ppermissionService.FirstOrDefault(r => r.SerialNumber == psn);
+            if (permission.Level == 1)
+            {
+                tmp = permission.SerialNumber;
+            }
+            else
+            {
+                tmp = CalActiveNav(permission.ParentSN.Value);
+            }
+            return tmp;
+        }
+
+        #endregion
     }
 }

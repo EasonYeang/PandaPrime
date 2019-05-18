@@ -39,3 +39,10 @@ function getQueryString(name) {
     return null;
 }
 
+/**
+ * 时间戳
+ */
+function timeStamp() {
+    return (new Date()).valueOf();
+}
+

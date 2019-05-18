@@ -2,45 +2,13 @@
     var app = new Vue({
         el: '#app',
         data: {
-            topPermissionList: [],
             sidePermissionList: [],
-            topActive: '',
-            src: '../../BaseInfo/Universe/welcome.html'
+            src: '../../BaseInfo/Universe/welcome.html',
+            activeNav: 7,
+            active: 0
         },
         methods: {
-            getTopPermissions: function () {
-                var $this = this;
-                $.axios({
-                    url: '/DefaultPage/GetTopPermissions',
-                }).then(function (response) {
-                    if (response !== null) {
-                        var data = response.data;
-                        if (data !== null && data.length > 0) {
-                            $this.topPermissionList = data;
-                            $this.topActive = data[0].SerialNumber.toString();
-                        }
-                    }
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            },
-            onSelectSide: function (key) {
-                var $this = this;
-                $.axios({
-                    url: '/DefaultPage/GetSideLocation',
-                    data: { sn: key }
-                }).then(function (response) {
-                    if (response !== null) {
-                        var data = response.data;
-                        if (data !== null && data.length > 0) {
-                            $this.src = data + '?tS=' + getGuid();
-                        }
-                    }
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            },
-            onSelectTop: function (key) {
+            getSidePermissionList: function (key) {
                 var $this = this;
                 $.axios({
                     url: '/DefaultPage/GetSidePermissions',
@@ -57,15 +25,53 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
-            }
-        },
-        watch: {
-            topActive: function (val, oldVal) {
-                this.onSelectTop(val);
+            },
+            logOut: function () {
+                $.axios({
+                    url: '/DefaultPage/LogOut'
+                }).then((response) => {
+                    var data = response.data;
+                    if (data != null) {
+                        if (data.Flag === 1) {
+                            window.location = '/Login/Index';
+                        }
+                    }
+                }).catch((error) => { console.log(error) });
+            },
+            clickSide: function (detail) {
+                var filePath = detail.FilePath;
+                //一级菜单选中
+                if (detail.Level === 1) {
+                    this.activeNav = detail.SerialNumber;
+                } else {
+                    this.calActiveNav(detail.ParentSN);
+                }
+
+                if (filePath != null) {
+                    if (filePath.indexOf('?') === -1) {
+                        filePath = `${filePath}?timeStamp=${timeStamp()}`;
+                    } else {
+                        filePath = `${filePath}&timeStamp=${timeStamp()}`;
+                    }
+                    this.src = filePath;
+                }
+            },
+            calActiveNav: function (psn) {
+                var THIS = this;
+                $.axios({
+                    url: '/DefaultPage/CalActiveNav',
+                    data: { psn: psn }
+                }).then((response) => {
+                    var data = response.data;
+                    if (data != null) {
+                        THIS.activeNav = data;
+                    }
+                }).catch((error) => { console.log(error) });
             }
         },
         mounted: function () {
-            this.getTopPermissions();
+            this.getSidePermissionList(1);
         }
     });
+
 });

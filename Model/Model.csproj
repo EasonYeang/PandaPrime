@@ -43,6 +43,7 @@
     <Compile Include="DropDownListModel.cs" />
     <Compile Include="PAccountVm.cs" />
     <Compile Include="PPermissionDto.cs" />
+    <Compile Include="PPermissionQM.cs" />
     <Compile Include="PPermissionVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableColumn.cs" />

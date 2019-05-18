@@ -1,127 +1,170 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>主页面</title>
-    <!--Styles-->
+    <meta charset="utf-8">
+    <title>默认页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link href="../../plugins/layui/css/layui.css" rel="stylesheet" />
+    <link href="../../assets/admin.css" rel="stylesheet" />
+    <link href="../../assets/main.css" rel="stylesheet" />
     <link href="../../plugins/elementUI/index.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-    <!--Scripts-->
-    <script src="../../Scripts/jquery-1.10.2.min.js"></script>
-    <script src="../../plugins/vue/vue.js"></script>
+    <script src="../../plugins/jquery/jquery.min.js"></script>
     <script src="../../plugins/vue/axios.min.js"></script>
     <script src="../../PrimeJS/extend.js"></script>
-    <script src="../../plugins/vue/browser.min.js"></script>
-    <script src="../../plugins/vue/polyfill.min.js"></script>
+    <script src="../../plugins/vue/vue.js"></script>
     <script src="../../plugins/elementUI/index.js"></script>
+    <script src="../../Scripts/browser.min.js"></script>
+    <script src="../../Scripts/polyfill.min.js"></script>
+    <script src="../../plugins/layui/layui.js"></script>
     <script src="../../PrimeJS/PublicJs.js"></script>
-    <script src="../../PrimeJS/console.js" type="text/babel">
+    <script src="../../PrimeJS/console.js">
     </script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .el-header {
-            padding: 0 0;
-        }
-
-        .el-submenu .el-menu-item {
-            /*min-width: 0;*/
-        }
-
-        .row-header {
-            background-color: rgb(84,92,100);
-            max-height: 60px;
-        }
-
-        .el-submenu__title {
-            min-width: 200px;
-        }
-    </style>
 </head>
-<body>
-    <div id="app">
-        <el-container>
-            <el-header>
-                <el-row class="row-header">
-                    <el-col :span="6"></el-col>
-                    <el-col :span="12" :offset="6">
-                        <el-menu :default-active="topActive"
-                                 class="el-menu-demo"
-                                 mode="horizontal"
-                                 @select="onSelectTop"
-                                 background-color="#545c64"
-                                 text-color="#fff"
-                                 active-text-color="#ffd04b">
-                            <el-menu-item v-for="item in topPermissionList" :key="item.SerialNumber.toString()" :index="item.SerialNumber.toString()">{{item.Name}}</el-menu-item>
-                        </el-menu>
-                    </el-col>
-                    <el-col :span="6"></el-col>
-                </el-row>
-            </el-header>
-            <el-container>
-                <el-aside style="width:200px;background-color:rgb(84,92,100);">
+<body class="layui-layout-body">
+    <div id="app" v-cloak>
+        <div class="layui-layout layui-layout-admin">
+            <div class="layui-header">
+                <!-- 头部区域 -->
+                <ul class="layui-nav layui-layout-left">
+                    <!--<li class="layui-nav-item layadmin-flexible" lay-unselect>
+                        <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                            <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                        </a>
+                    </li>-->
+                </ul>
+                <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+
+                    <li class="layui-nav-item" lay-unselect>
+                        <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
+                            <i class="layui-icon layui-icon-notice"></i>
+
+                            <!-- 如果有新消息，则显示小圆点 -->
+                            <span class="layui-badge-dot"></span>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="theme">
+                            <i class="layui-icon layui-icon-theme"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="note">
+                            <i class="layui-icon layui-icon-note"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;">
+                            <cite>超级管理员</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-href="set/user/info.html">基本资料</a></dd>
+                            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                            <dd @click="logOut"><a href="javascript:;">退出登录</a></dd>
+                        </dl>
+                    </li>
+
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                    </li>
+                    <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+                        <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 侧边菜单 -->
+            <div class="layui-side layui-side-menu">
+                <div class="layui-side-scroll">
+                    <div class="layui-logo" lay-href="home/console.html">
+                        <span>PANDA Prime</span>
+                    </div>
                     <div>
-                        <el-row class="tac">
-                            <el-col :span="24">
+                        <el-row class="el-aside">
+                            <el-col>
                                 <el-menu default-active="2"
                                          class="el-menu-vertical-demo"
-                                         @select="onSelectSide"
                                          background-color="#545c64"
                                          text-color="#fff"
                                          active-text-color="#ffd04b">
-                                    <el-menu-item style="min-width:200px;" v-if="item.Child == null" v-for="item in sidePermissionList" :key="item.SerialNumber.toString()" :index="item.SerialNumber.toString()">
-                                        <i class="el-icon-menu"></i>
-                                        <span slot="title">{{item.Name}}</span>
-                                    </el-menu-item>
-                                    <el-submenu v-if="item.Child != null" v-for="item in sidePermissionList" :key="item.SerialNumber.toString()" :index="item.SerialNumber.toString()">
+                                    <el-submenu index="1">
                                         <template slot="title">
                                             <i class="el-icon-location"></i>
-                                            <span>{{item.Name}}</span>
+                                            <span>导航一</span>
                                         </template>
-                                        <el-menu-item v-if="two.Child == null" v-for="two in item.Child" :key="two.SerialNumber.toString()" :index="two.SerialNumber.toString()">{{two.Name}}</el-menu-item>
-                                        <el-submenu v-if="two.Child != null" v-for="two in item.Child" :key="two.SerialNumber.toString()" :index="two.SerialNumber.toString()">
+                                        <el-menu-item-group>
                                             <template slot="title">
-                                                {{two.Name}}
+                                                分组一
                                             </template>
-                                            <el-menu-item v-if="two.Child != null" v-for="three in two.Child" :key="three.SerialNumber.toString()" :index="three.SerialNumber.toString()">{{three.Name}}</el-menu-item>
+                                            <el-menu-item index="1-1">选项1</el-menu-item>
+                                            <el-menu-item index="1-2">选项2</el-menu-item>
+                                        </el-menu-item-group>
+                                        <el-menu-item-group title="分组2">
+                                            <el-menu-item index="1-3">选项3</el-menu-item>
+                                        </el-menu-item-group>
+                                        <el-submenu index="1-4">
+                                            <template slot="title">
+                                                选项4
+                                            </template>
+                                            <el-menu-item index="1-4-1">选项1</el-menu-item>
                                         </el-submenu>
                                     </el-submenu>
+                                    <el-menu-item index="2">
+                                        <i class="el-icon-menu"></i>
+                                        <span slot="title">导航二</span>
+                                    </el-menu-item>
+                                    <el-menu-item index="3">
+                                        <i class="el-icon-setting"></i>
+                                        <span slot="title">导航三</span>
+                                    </el-menu-item>
                                 </el-menu>
                             </el-col>
                         </el-row>
                     </div>
-                </el-aside>
-                <el-main>
-                    <iframe id="iframe_content" frameborder="0" :src="src" width="100%" height="100%"></iframe>
-                </el-main>
-            </el-container>
-        </el-container>
+                </div>
+            </div>
+
+            <!-- 页面标签 -->
+            <div class="layadmin-pagetabs" id="LAY_app_tabs">
+                <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+                <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+                <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                    <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                        <li class="layui-nav-item" lay-unselect>
+                            <a href="javascript:;"></a>
+                            <dl class="layui-nav-child layui-anim-fadein">
+                                <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                                <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                                <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+                    <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                        <li lay-id="home/console.html" lay-attr="home/console.html" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 主体内容 -->
+            <div class="layui-body" id="LAY_app_body">
+                <div class="layadmin-tabsbody-item layui-show">
+                    <iframe :src="src" frameborder="0" class="layadmin-iframe"></iframe>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
 <script>
-    $(function () {
-
-    });
-    window.onload = function () {
-        var Width = document.documentElement.clientWidth;
-        //   $("#external-frame").width(Width - 240);
-        setIframeHeight(document.getElementById('iframe_content'));
-    };
-    function setIframeHeight(iframe) {
-        if (iframe) {
-            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-            if (iframeWin.document.body) {
-                var Height = document.documentElement.clientHeight;
-                iframe.height = Height - 105;
-            }
-        }
-    };
-    window.onresize = function () {
-        setIframeHeight(document.getElementById('iframe_content'));
-    }
+        //layui.use('element', function () {
+        //    var element = layui.element;
+        //});
 </script>
+
+

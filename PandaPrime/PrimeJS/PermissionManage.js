@@ -6,6 +6,7 @@
             pageSize: 10,
             total: 0,
             tableData: [],
+            fullscreenLoading: true
         },
         methods: {
             handleSizeChange: function (val) {
@@ -33,6 +34,8 @@
                 });
             }
 
+        },
+        beforeCreate: function () {
         },
         mounted: function () {
             this.getPermissionList();
