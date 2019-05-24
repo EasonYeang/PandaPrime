@@ -29,9 +29,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+    <link href="../../plugins/iview/dist/styles/iview.css" rel="stylesheet" />
+
     <!-- REQUIRED JS SCRIPTS -->
     <script src="../../plugins/vue/vue.js"></script>
-
+    <script src="../../plugins/iview/dist/iview.min.js"></script>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -277,22 +279,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
-                    Page Header
-                    <small>Optional description</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                    <li class="active">Here</li>
-                </ol>
+                <template>
+                    <Tabs type="card" :animated="false" closable @on-tab-remove="handleTabRemove">
+                        <Tab-Pane label="标签一" v-if="tab0">标签一的内容</Tab-Pane>
+                        <Tab-Pane label="标签二" v-if="tab1">标签二的内容</Tab-Pane>
+                        <Tab-Pane label="标签三" v-if="tab2">标签三的内容</Tab-Pane>
+                    </Tabs>
+                </template>
             </section>
 
             <!-- Main content -->
             <section class="content container-fluid">
-
-                <!--------------------------
-                  | Your Page Content Here |
-                  -------------------------->
 
             </section>
             <!-- /.content -->
@@ -397,6 +394,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script>
     var app = new Vue({
         el: '#app',
+        data: {
+            tab0: true,
+            tab1: true,
+            tab2: true
+        },
         methods: {
             handleClick: function (e) {
                 console.log(e.currentTarget);
@@ -408,6 +410,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     $(e.currentTarget).parent().addClass('active').siblings().removeClass('active');
                     $(e.currentTarget).parents('.treeview').siblings().find('li').removeClass('active');
                 }
+            },
+            handleTabRemove: function (name) {
+                this['tab' + name] = false;
             }
         }
     });

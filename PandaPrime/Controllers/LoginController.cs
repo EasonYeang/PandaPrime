@@ -43,6 +43,21 @@ namespace PandaPrime.Controllers
         [AllowAnonymous]
         public ActionResult Login(PAccountVm vm)
         {
+            if (!_paccountService.Exist(u => u.Account.Equals("admin")))
+            {
+                PAccount user = new PAccount()
+                {
+                    Account = "admin",
+                    UserName = "超级管理员",
+                    Password = MD5.Encode("setup"),
+                    IsActive = true,
+                    NickName = "超级",
+                    CreateTime = DateTime.Now.Date
+                };
+                _paccountService.Add(user);
+                _paccountService.SaveChanges();
+            }
+
             PAccount pa = Mapper.Map<PAccount>(vm);
             DateTime t = DateTime.Now.Date;
 

@@ -30,7 +30,7 @@
         }
 
         $.$Post({
-            url: '/Login/Login2',
+            url: '/Login/Login',
             data: { Account: account, Password: password, ValidateCode: validateCode },
             success: function (data) {
                 if (data != null) {
