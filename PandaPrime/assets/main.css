@@ -1,22 +1,5 @@
-﻿html {
-    background-color: #f2f2f2;
-    color: #666;
-}
-
-[v-cloak] {
+﻿[v-cloak] {
     display: none;
-}
-
-.iframe {
-    /*position: absolute;*/
-    width: 100%;
-}
-
-.wrap {
-    background-color: #ecf0f5;
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
 .table {

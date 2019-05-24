@@ -18,6 +18,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link href="../../plugins/AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet" />
     <link href="../../plugins/AdminLTE/dist/css/skins/skin-blue.min.css" rel="stylesheet" />
+    <link href="../../assets/main.css" rel="stylesheet" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,20 +36,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="../../plugins/vue/vue.js"></script>
     <script src="../../plugins/iview/dist/iview.min.js"></script>
     <style>
-        #main_iframe {
-            margin: 0px;
-            padding: 0px;
-            position: relative;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            border: 1px solid #ccc;
-            overflow: hidden;
+        .demo-tabs-style2 > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab {
+            border-radius: 0;
+            background: #fff;
+        }
+
+        .demo-tabs-style2 > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active {
+            border-top: 1px solid #3399ff;
+        }
+
+            .demo-tabs-style2 > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active:before {
+                content: '';
+                display: block;
+                width: 100%;
+                height: 1px;
+                background: #3399ff;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+        .content {
+            padding-top: 0;
         }
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper" id="app">
+    <div class="wrapper" id="app" v-cloak>
 
         <!-- Main Header -->
         <header class="main-header">
@@ -56,9 +70,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Logo -->
             <a href="index2.html" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>A</b>LT</span>
+                <span class="logo-mini"><b>PD</b>P</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>Admin</b>LTE</span>
+                <span class="logo-lg"><b>PANDA</b>Prime</span>
             </a>
 
             <!-- Header Navbar -->
@@ -227,18 +241,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
 
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="/assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                    </div>
-                    <div class="pull-left info">
-                        <p>Alexander Pierce</p>
-                        <!-- Status -->
-                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                    </div>
-                </div>
-
                 <!-- search form (Optional) -->
                 <form action="#" method="get" class="sidebar-form">
                     <div class="input-group">
@@ -253,31 +255,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- /.search form -->
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">HEADER</li>
+                    <li class="header">菜单导航</li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li @click="handleClick($event)" class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-                    <li @click="handleClick($event)" class="treeview">
+                    <li @click="handleClick($event)" v-for="one in sidePermissionList" v-if="one.Child==null"><a href="#"><i :class="one.Icon"></i> <span>{{one.Name}}</span></a></li>
+                    <li @click="handleClick($event)" v-else class="treeview">
                         <a href="#">
-                            <i class="fa fa-link"></i> <span>Multilevel</span>
+                            <i :class="one.Icon"></i> <span>{{one.Name}}</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="javascript:;" @click="handleClick($event)"><i class="fa fa-circle-o"></i>Link in level 2</a></li>
-                            <li><a href="javascript:;" @click="handleClick($event)"><i class="fa fa-circle-o"></i>Link in level 2</a></li>
-                        </ul>
-                    </li>
-                    <li @click="handleClick($event)" class="treeview">
-                        <a href="#">
-                            <i class="fa fa-link"></i> <span>Multilevel</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="javascript:;" @click="handleClick($event)"><i class="fa fa-circle-o"></i>Link in level 2</a></li>
-                            <li><a href="javascript:;" @click="handleClick($event)"><i class="fa fa-circle-o"></i>Link in level 2</a></li>
+                            <li><a href="javascript:;" v-for="two in one.Child" v-if="two.Child==null" @click="handleClick($event)"><i :class="two.Icon"></i>{{two.Name}}</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -290,23 +279,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <template>
-                    <Tabs type="card" :animated="false" closable @on-tab-remove="handleTabRemove">
-                        <Tab-Pane label="标签一" v-if="tab0">
-                            <div class="app-content">
-                                <iframe src="PermissionManage.html" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" width="100%" id="iframecon" name="iframepage" onload="iFrameHeight();"></iframe>
-                            </div>
+                <div class="demo-tabs-style2">
+                    <template>
+                        <Tabs type="card" :animated="false" closable @on-tab-remove="handleTabRemove">
+                            <Tab-Pane v-for="item in tabs" :label="item.label" v-if="item.key">
+                                <div class="app-content">
 
-                        </Tab-Pane>
-                        <Tab-Pane label="标签二" v-if="tab1">标签二的内容</Tab-Pane>
-                        <Tab-Pane label="标签三" v-if="tab2">标签三的内容</Tab-Pane>
-                    </Tabs>
-                </template>
+                                </div>
+
+                            </Tab-Pane>
+                        </Tabs>
+                    </template>
+                </div>
             </section>
 
-            <!-- Main content -->
-            <!--<section class="content container-fluid"></section>-->
-            <!-- /.content -->
+            <section class="content container-fluid">
+                <iframe src="PermissionManage.html" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" width="100%" id="iframecon" name="iframepage" onload="iFrameHeight();"></iframe>
+            </section>
         </div>
         <!-- /.content-wrapper -->
         <!-- Main Footer -->
@@ -403,15 +392,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="../../plugins/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../../plugins/AdminLTE/dist/js/adminlte.min.js"></script>
+    <script src="../../plugins/vue/axios.min.js"></script>
+    <script src="../../PrimeJS/extend.js"></script>
+    <script src="../../Scripts/browser.min.js"></script>
+    <script src="../../Scripts/polyfill.min.js"></script>
+    <script src="../../PrimeJS/PublicJs.js"></script>
 </body>
 </html>
 <script>
     var app = new Vue({
         el: '#app',
         data: {
-            tab0: true,
-            tab1: true,
-            tab2: true
+            tabs: [
+                { label: '标签一', key: true },
+                { label: '标签二', key: true },
+                { label: '标签三', key: true }
+            ],
+            sidePermissionList: []
         },
         methods: {
             handleClick: function (e) {
@@ -427,10 +424,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
             },
             handleTabRemove: function (name) {
                 this['tab' + name] = false;
+            },
+            getSidePermissionList: function (key) {
+                var $this = this;
+                $.axios({
+                    url: '/DefaultPage/GetSidePermissions',
+                    data: { sn: 0 }
+                }).then(function (response) {
+                    if (response !== null) {
+                        var data = response.data;
+                        if (data !== null && data.length > 0) {
+                            $this.sidePermissionList = data;
+                        } else {
+                            $this.sidePermissionList = [];
+                        }
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
+        },
+        mounted: function () {
+            this.getSidePermissionList();
         }
     });
 
+    /**
+     * iframe高度自适应
+     */
     function iFrameHeight() {
         var ifm = document.getElementById("iframecon");
         var subWeb = document.frames ? document.frames["iframepage"].document :

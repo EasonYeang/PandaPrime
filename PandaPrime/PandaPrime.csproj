@@ -185,6 +185,7 @@
     <Content Include="assets\img\avatar2.png" />
     <Content Include="assets\img\avatar3.png" />
     <Content Include="assets\img\avatar5.png" />
+    <Content Include="DB\PANDAPrime.sql" />
     <Content Include="plugins\AdminLTE\bower_components\bootstrap\dist\css\bootstrap-theme.css" />
     <Content Include="plugins\AdminLTE\bower_components\bootstrap\dist\css\bootstrap-theme.min.css" />
     <Content Include="plugins\AdminLTE\bower_components\bootstrap\dist\css\bootstrap.css" />
