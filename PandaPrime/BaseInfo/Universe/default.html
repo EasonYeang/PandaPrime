@@ -34,7 +34,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED JS SCRIPTS -->
     <script src="../../plugins/vue/vue.js"></script>
     <script src="../../plugins/iview/dist/iview.min.js"></script>
-
+    <style>
+        #main_iframe {
+            margin: 0px;
+            padding: 0px;
+            position: relative;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper" id="app">
@@ -281,7 +292,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <section class="content-header">
                 <template>
                     <Tabs type="card" :animated="false" closable @on-tab-remove="handleTabRemove">
-                        <Tab-Pane label="标签一" v-if="tab0">标签一的内容</Tab-Pane>
+                        <Tab-Pane label="标签一" v-if="tab0">
+                            <div class="app-content">
+                                <iframe src="PermissionManage.html" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" width="100%" id="iframecon" name="iframepage" onload="iFrameHeight();"></iframe>
+                            </div>
+
+                        </Tab-Pane>
                         <Tab-Pane label="标签二" v-if="tab1">标签二的内容</Tab-Pane>
                         <Tab-Pane label="标签三" v-if="tab2">标签三的内容</Tab-Pane>
                     </Tabs>
@@ -289,9 +305,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </section>
 
             <!-- Main content -->
-            <section class="content container-fluid">
-
-            </section>
+            <!--<section class="content container-fluid"></section>-->
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
@@ -416,4 +430,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             }
         }
     });
+
+    function iFrameHeight() {
+        var ifm = document.getElementById("iframecon");
+        var subWeb = document.frames ? document.frames["iframepage"].document :
+            ifm.contentDocument;
+        if (ifm != null && subWeb != null) {
+            ifm.height = subWeb.body.scrollHeight;
+        }
+    }
 </script>
