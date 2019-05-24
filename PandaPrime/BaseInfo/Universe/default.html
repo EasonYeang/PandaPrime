@@ -266,7 +266,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="javascript:;" v-for="two in one.Child" v-if="two.Child==null" @click="handleClick($event)"><i :class="two.Icon"></i>{{two.Name}}</a></li>
+                            <li  v-for="two in one.Child" v-if="two.Child==null"><a href="javascript:;" @click="handleClick($event)"><i :class="two.Icon"></i>{{two.Name}}</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -417,7 +417,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 var tagName = e.currentTarget.tagName;
                 if (tagName === 'LI') {
                     $(e.currentTarget).addClass('active').siblings().removeClass('active');
-                } else if (tagName === 'A') {
+                } else if (tagName === 'A') {                    
                     $(e.currentTarget).parent().addClass('active').siblings().removeClass('active');
                     $(e.currentTarget).parents('.treeview').siblings().find('li').removeClass('active');
                 }
