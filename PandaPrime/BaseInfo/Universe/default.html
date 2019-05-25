@@ -35,31 +35,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED JS SCRIPTS -->
     <script src="../../plugins/vue/vue.js"></script>
     <script src="../../plugins/iview/dist/iview.min.js"></script>
-    <style>
-        .demo-tabs-style2 > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab {
-            border-radius: 0;
-            background: #fff;
-        }
-
-        .demo-tabs-style2 > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active {
-            border-top: 1px solid #3399ff;
-        }
-
-            .demo-tabs-style2 > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active:before {
-                content: '';
-                display: block;
-                width: 100%;
-                height: 1px;
-                background: #3399ff;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-
-        .content {
-            padding-top: 0;
-        }
-    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper" id="app" v-cloak>
@@ -222,7 +197,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="#" @click="logOut" class="btn btn-default btn-flat">退出登录</a>
                                     </div>
                                 </li>
                             </ul>
@@ -257,7 +232,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">菜单导航</li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li @click="handleClick($event)" v-for="one in sidePermissionList" v-if="one.Child==null"><a href="#"><i :class="one.Icon"></i> <span>{{one.Name}}</span></a></li>
+                    <li @click="handleClick($event,one)" v-for="one in sidePermissionList" v-if="one.Child==null"><a href="#"><i :class="one.Icon"></i> <span>{{one.Name}}</span></a></li>
                     <li @click="handleClick($event)" v-else class="treeview">
                         <a href="#">
                             <i :class="one.Icon"></i> <span>{{one.Name}}</span>
@@ -266,7 +241,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li  v-for="two in one.Child" v-if="two.Child==null"><a href="javascript:;" @click="handleClick($event)"><i :class="two.Icon"></i>{{two.Name}}</a></li>
+                            <li v-for="two in one.Child" v-if="two.Child==null"><a href="javascript:;" @click="handleClick($event,two)"><i :class="two.Icon"></i>{{two.Name}}</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -279,22 +254,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <div class="demo-tabs-style2">
-                    <template>
-                        <Tabs type="card" :animated="false" closable @on-tab-remove="handleTabRemove">
-                            <Tab-Pane v-for="item in tabs" :label="item.label" v-if="item.key">
-                                <div class="app-content">
-
-                                </div>
-
-                            </Tab-Pane>
-                        </Tabs>
-                    </template>
-                </div>
+                <h1>
+                    {{title}}
+                    <small>Control panel</small>
+                </h1>
             </section>
 
             <section class="content container-fluid">
-                <iframe src="PermissionManage.html" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" width="100%" id="iframecon" name="iframepage" onload="iFrameHeight();"></iframe>
+                <iframe src="style.html" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" width="100%" id="iframecon" name="iframepage" onload="iFrameHeight();"></iframe>
             </section>
         </div>
         <!-- /.content-wrapper -->
@@ -302,10 +269,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <footer class="main-footer">
             <!-- To the right -->
             <div class="pull-right hidden-xs">
-                Anything you want
+                Ver1.0
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2019 <a href="#">PANDAPrime Co</a>.</strong> All rights reserved.
         </footer>
 
         <!-- Control Sidebar -->
@@ -397,67 +364,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="../../Scripts/browser.min.js"></script>
     <script src="../../Scripts/polyfill.min.js"></script>
     <script src="../../PrimeJS/PublicJs.js"></script>
+    <script src="../../PrimeJS/default.js"></script>
 </body>
 </html>
-<script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            tabs: [
-                { label: '标签一', key: true },
-                { label: '标签二', key: true },
-                { label: '标签三', key: true }
-            ],
-            sidePermissionList: []
-        },
-        methods: {
-            handleClick: function (e) {
-                console.log(e.currentTarget);
-                console.log(e);
-                var tagName = e.currentTarget.tagName;
-                if (tagName === 'LI') {
-                    $(e.currentTarget).addClass('active').siblings().removeClass('active');
-                } else if (tagName === 'A') {                    
-                    $(e.currentTarget).parent().addClass('active').siblings().removeClass('active');
-                    $(e.currentTarget).parents('.treeview').siblings().find('li').removeClass('active');
-                }
-            },
-            handleTabRemove: function (name) {
-                this['tab' + name] = false;
-            },
-            getSidePermissionList: function (key) {
-                var $this = this;
-                $.axios({
-                    url: '/DefaultPage/GetSidePermissions',
-                    data: { sn: 0 }
-                }).then(function (response) {
-                    if (response !== null) {
-                        var data = response.data;
-                        if (data !== null && data.length > 0) {
-                            $this.sidePermissionList = data;
-                        } else {
-                            $this.sidePermissionList = [];
-                        }
-                    }
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            }
-        },
-        mounted: function () {
-            this.getSidePermissionList();
-        }
-    });
-
-    /**
-     * iframe高度自适应
-     */
-    function iFrameHeight() {
-        var ifm = document.getElementById("iframecon");
-        var subWeb = document.frames ? document.frames["iframepage"].document :
-            ifm.contentDocument;
-        if (ifm != null && subWeb != null) {
-            ifm.height = subWeb.body.scrollHeight;
-        }
-    }
-</script>
