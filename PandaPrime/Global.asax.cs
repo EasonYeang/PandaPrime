@@ -20,6 +20,8 @@ namespace PandaPrime
             AutofacConfig.Register();
             //...注册AutoMapper
             Configuration.Configure();
+            //数据库不存在时，初始化
+            Database.SetInitializer<PrimeContext>(new DataInit());
         }
     }
 }

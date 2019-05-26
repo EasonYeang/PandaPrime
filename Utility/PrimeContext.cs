@@ -10,7 +10,7 @@ namespace Utility
         public PrimeContext() : base("Panda")
         {
             //取消当数据库模型发生改变时删除当前数据库重建新数据库的设置。
-            Database.SetInitializer<PrimeContext>(null);
+            //Database.SetInitializer<PrimeContext>(new DataInit());
         }
 
         #region Tables
@@ -27,6 +27,15 @@ namespace Utility
             modelBuilder.Configurations.AddFromAssembly(Assembly.Load("Mapping"));
 
             base.OnModelCreating(modelBuilder);
+        }
+    }
+
+    public class DataInit : CreateDatabaseIfNotExists<PrimeContext>
+    {
+        protected override void Seed(PrimeContext context)
+        {
+            context.PAccount.Add(new PAccount { UserName = "admin", Password = MD5.Encode("setup") });
+            base.Seed(context);
         }
     }
 }
