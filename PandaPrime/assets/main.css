@@ -5,3 +5,7 @@
 .table {
     table-layout: fixed;
 }
+
+.mg_top5 {
+    margin-top: 5px;
+}

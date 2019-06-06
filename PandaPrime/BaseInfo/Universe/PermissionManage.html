@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <link href="../../assets/main.css" rel="stylesheet" />
-    <link href="../../plugins/elementUI/index.css" rel="stylesheet" />
+    <link href="../../plugins/iview/dist/styles/iview.css" rel="stylesheet" />
     <link href="../../plugins/bootstrap-table/css/bootstrap-table.min.css" rel="stylesheet" />
 
     <script src="../../Scripts/jquery-1.10.2.min.js"></script>
@@ -30,107 +30,29 @@
     <script src="../../plugins/bootstrap-table/js/bootstrap-table-zh-CN.min.js"></script>
     <script src="../../plugins/vue/vue.js"></script>
     <script src="../../plugins/vue/axios.min.js"></script>
-    <script src="../../plugins/elementUI/index.js"></script>
+    <script src="../../plugins/iview/dist/iview.min.js"></script>
     <script src="../../Scripts/browser.min.js"></script>
     <script src="../../Scripts/polyfill.min.js"></script>
     <script src="../../PrimeJS/extend.js"></script>
     <script src="../../PrimeJS/PublicJs.js"></script>
-    <!--<script src="../../PrimeJS/PermissionManage.js" type="text/babel">-->
-    <!--</script>-->
+    <script src="../../PrimeJS/PermissionManage.js" type="text/babel">
+    </script>
 </head>
 <body>
-    <div class="callout callout-info">
-        <h4>1 Tip!</h4>
-
-        <p>
-            Add the layout-boxed class to the body tag to get this layout. The boxed layout is helpful when working on
-            large screens because it prevents the site from stretching very wide.
-        </p>
-    </div>
-    <div class="callout callout-info">
-        <h4>2 Tip!</h4>
-
-        <p>
-            Add the layout-boxed class to the body tag to get this layout. The boxed layout is helpful when working on
-            large screens because it prevents the site from stretching very wide.
-        </p>
-    </div>
-    <div class="callout callout-info">
-        <h4>3 Tip!</h4>
-
-        <p>
-            Add the layout-boxed class to the body tag to get this layout. The boxed layout is helpful when working on
-            large screens because it prevents the site from stretching very wide.
-        </p>
-    </div>
-    <div class="callout callout-info">
-        <h4>4 Tip!</h4>
-
-        <p>
-            Add the layout-boxed class to the body tag to get this layout. The boxed layout is helpful when working on
-            large screens because it prevents the site from stretching very wide.
-        </p>
-    </div>
-    <div class="callout callout-info">
-        <h4>5 Tip!</h4>
-
-        <p>
-            Add the layout-boxed class to the body tag to get this layout. The boxed layout is helpful when working on
-            large screens because it prevents the site from stretching very wide.
-        </p>
-    </div>
-    <div class="callout callout-info">
-        <h4>6 Tip!</h4>
-
-        <p>
-            Add the layout-boxed class to the body tag to get this layout. The boxed layout is helpful when working on
-            large screens because it prevents the site from stretching very wide.
-        </p>
+    <div id="app" v-cloak style="padding:2px;">
+        <row>
+            <i-col span="8">
+                <i-input v-model="searchText" search enter-button placeholder="请输入目录名称" />
+            </i-col>
+        </row>
+        <row class="mg_top5">
+            <i-col>
+                <template>
+                    <i-table border stripe :columns="cols" :data="tableData"></i-table>
+                </template>
+            </i-col>
+        </row>
     </div>
 
 </body>
 </html>
-<script>
-    $(function () {
-        $('#table').bootstrapTable('destroy').bootstrapTable({
-            url: '/PermissionManage/GetTableData',
-            method: 'post',
-            classes: 'table table-bordered table-hover table-striped',
-            theadClasses: 'thead-light',
-            contentType: "application/x-www-form-urlencoded",
-            sortName: 'ID',
-            sortOrder: 'DESC',
-            cache: false,
-            pagination: true,
-            pageNumber: 1,
-            pageSize: 5,
-            pageList: [5, 10, 15, 20],
-            search: false,
-            sidePagination: 'server',
-            queryParamsType: '',
-            uniqueId: 'ID',
-            queryParams: function (params) {
-
-                params.searchText = {
-                    ID: 0
-                };
-
-                return params;
-            },
-            columns: [{
-                field: 'ID',
-                title: 'ID'
-            }, {
-                field: 'Title',
-                title: '目录名称'
-            }, {
-                field: 'Icon',
-                title: '图标'
-            }, {
-                field: 'Path',
-                title: '目录路径'
-            }],
-
-        })
-    });
-</script>

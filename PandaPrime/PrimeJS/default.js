@@ -1,4 +1,6 @@
 ﻿$(function () {
+    changeFrameHeight();
+
     var app = new Vue({
         el: '#app',
         data: {
@@ -15,7 +17,7 @@
                     $(e.currentTarget).parents('.treeview').siblings().find('li').removeClass('active');
                 }
                 if (item != null) {
-                    $('#iframecon').attr('src', item.FilePath);
+                    $('#ifm').attr('src', item.FilePath);
                     this.title = item.Name;
                 }
             },
@@ -55,15 +57,3 @@
         }
     });
 });
-
-/**
- * iframe高度自适应
- */
-function iFrameHeight() {
-    var ifm = document.getElementById("iframecon");
-    var subWeb = document.frames ? document.frames["iframepage"].document :
-        ifm.contentDocument;
-    if (ifm != null && subWeb != null) {
-        ifm.height = subWeb.body.scrollHeight;
-    }
-}

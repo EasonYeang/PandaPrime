@@ -26,7 +26,7 @@ namespace PandaPrime.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetTableData(int pageNumber, int pageSize, PPermissionQM searchText, string sortName, string sortOrder)
+        public JsonResult GetTableData(int pageNumber, int pageSize)
         {
             //List<PPermission> result = _ppermissionService.GetList(r => !r.IsDelete.Value && r.Level > 0);
             int tc = 0;
